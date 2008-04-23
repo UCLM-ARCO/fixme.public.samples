@@ -1,0 +1,5 @@
+module std {
+  interface hello {
+    void puts(in string str);
+  };
+};

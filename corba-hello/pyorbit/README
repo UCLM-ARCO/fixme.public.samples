@@ -1,0 +1,19 @@
+
+Ejemplo de "hello"
+
+Paquetes:
+ - orbit2
+ - liborbit2
+ - python2.3
+ - python2.3-pyorbit
+
+Compilación:
+ $ make
+
+Ejecución:
+ $ ./server.py &
+ $ ./client.py IOR:....
+
+TODO:
+ - Añadir al servidor el código necesario para acabar con Ctrl-C
+ 

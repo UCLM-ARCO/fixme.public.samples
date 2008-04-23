@@ -1,0 +1,11 @@
+
+En este módulo se incluyen implementaciones de varios ORB para la
+misma interfaz IDL:
+
+module HelloModule {
+  interface hello {
+    void puts(in string str);
+  };
+};
+
+Su objetivo es probar la interoperabilidad entre los distintos ORB.

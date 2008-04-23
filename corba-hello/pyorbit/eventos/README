@@ -1,0 +1,51 @@
+Dependencias
+------------
+       Paquete	            Versión
+   -------------------------------------
+   -   mico                 2.3.11-1   
+   -   orbit2               2.3.107-1 
+   -   liborbit2            2.8.3-2  
+   -   liborbit2-dev        2.8.3-2   
+   -   python2.3-pyorbit    2.0.0-3 
+	
+Aplicaciones
+------------
+   - mico-channel-factory-up: Este script levanta los demonios nsd ("servidor de nombres")
+     y eventd ("servicio de eventos") de mico. También registra un EventChannelFactory en el ns
+     y nos devuelve su IOR.
+
+   - mico-channel-factory-down: Hace lo contrario, mata los demonios.
+
+   - run.sh: Script lanzador de la Aplicación.
+
+   - mico-channel-factory-up: Crea un Canal de Eventos a partir de 
+     la IOR del EventChannelFactory.
+
+   ** Estos 4 Script se encuentran en: 
+      http://arco.inf-cr.uclm.es/svn/public/prj/corba-hello/trunk/src/orbit2/eventos/
+
+
+
+   - hello-consumer.py: Consumidor del Canal.
+	
+   - hello-supplier.py: Productor del Canal.
+
+Uso
+---
+   1.- $ ./mico-channel-factory-up 
+       Obtenemos la IOR de EventChannelFactor
+
+   2.- $ ./create-mico-channel <IOR:EventChannelFactory>
+       Obtenemos la IOR de EventChannel
+  
+   3.- $ ./hello-consumer.py <IOR:EventChannel>
+
+   4.- $ ./hello-supplier.py <IOR:EventChannel>
+ 
+   5.- $ ./mico-channel-factory-down
+
+NOTA
+----
+   Automatic Type Discovery bloquea el Canal de Eventos, debido a esto,
+el paquete python2.3-pyorbit_2.0.0-3_i386.deb ha sido modificado. Se 
+encuentra en: xxxx.   

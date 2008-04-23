@@ -1,0 +1,20 @@
+
+Ejemplo de "hello" con servidor de nombres.
+
+Paquetes:
+ - orbit2
+ - liborbit2
+ - python2.3
+ - python2.3-pyorbit
+
+Compilación:
+ $ make
+
+Ejecución:
+ $ orbit-name-server > IOR &
+ $ ./server.py `cat IOR` &
+ $ ./client.py `cat IOR`
+
+TODO:
+ - Añadir al servidor el código necesario para acabar con Ctrl-C
+ 

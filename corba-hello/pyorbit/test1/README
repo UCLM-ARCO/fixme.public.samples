@@ -1,0 +1,22 @@
+Item to test:
+   PyORBit incompatibility with non-ORBit2 servers (MICO in this sample)
+
+Tested with:
+ 
+ mico 2.3.11-1
+ liborbit2 2.10.2-1.1
+ python2.3-pyorbit 2.0.1-1 
+ gcc 3.3.4-3
+ system: Debian SID with Linux 2.4.22
+
+
+To run:
+
+ $ ./mico_server &
+ $ ./mico_client `cat hello.ior`         % works fine
+ $ ./pyorbit_client.py `cat hello.ior`   % client stalled or server segfault
+ 
+In ethereal_capture.dmp you can view the traffic for the commands above.
+
+
+ 

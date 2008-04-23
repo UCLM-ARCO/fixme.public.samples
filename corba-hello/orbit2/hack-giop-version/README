@@ -1,0 +1,19 @@
+
+Este ejemplo permite modificar la estructura semiopaca CORBA_ORB. El objetivo
+es hacer que ORBit2 genere tráfico GIOP v1.0.
+
+Para ello:
+
+crear un enlace simbólico del subdirectorio linc2/include/linc del
+paquete de fuentes de ORBit2 a internal/linc.
+
+crear un enlace simbólico del subdirectorio include/orbit del
+paquete de fuentes de ORBit2 a internal/orbit
+
+Para crearlos automáticamente ejecuta: make internal
+
+
+
+
+Se ha probado con la versión 2.8.3-2
+

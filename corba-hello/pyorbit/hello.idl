@@ -1,0 +1,5 @@
+module HelloModule {
+  interface hello {
+    void puts(in string str);
+  };
+};

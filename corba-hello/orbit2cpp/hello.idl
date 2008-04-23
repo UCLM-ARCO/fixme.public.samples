@@ -1,0 +1,12 @@
+
+module SENDA {
+interface hello {
+	void puts(in string str);
+};
+};
+
+
+
+
+
+

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./hello-server -ORBIIOPIPName=marvin.inf-cr.uclm.es -ORBIIOPIPSock=11011 -ORBIIOPIPv4=1 -ORBIIOPUSock=0 -ORBIIOPIPv6=0

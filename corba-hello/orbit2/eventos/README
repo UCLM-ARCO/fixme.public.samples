@@ -1,0 +1,36 @@
+Paquetes
+--------
+       Paquete	         Versión
+   -----------------------------------
+   -   mico              2.3.11-1   
+   -   orbit2            2.3.107-1 
+   -   liborbit2         2.8.3-2  
+   -   liborbit2-dev     2.8.3-2   
+
+Aplicaciones
+------------
+   - mico-channel-factory-up: Este script levanta los demonios nsd ("servidor de nombres")
+     y eventd ("servicio de eventos") de mico. También registra un EventChannelFactory en el ns
+     y nos devuelve su IOR.
+
+   - mico-channel-factory-down: Hace lo contrario, mata los demonios.
+
+   - run.sh: Script lanzador de la Aplicación.
+
+   - mico-channel-factory-up: Crea un Canal de Eventos a partir de la IOR del EventChannelFactory.
+     Editamos el script y sustituimos la máquina kotok.lab.inf-cr.uclm.es por la nuestra.
+	
+
+   - hello-consumer: Consumidor del Canal.
+	
+   - hello-supplier: Productor del Canal.
+
+Uso
+---
+   1.- $ make 
+	
+   2.- $ ./mico-channel-factory-up 
+
+   3.- $ ./run.sh
+  
+   4.- $ ./mico-channel-factory-down

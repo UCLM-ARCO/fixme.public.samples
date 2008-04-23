@@ -1,0 +1,33 @@
+HelloWorld en java con servicio de nombres
+
+Como ejecutarlo:
+
+Primero tenemos que lanzar el servidor del servicio de nombres, por ejemplo
+el de orbit, redireccionaremos la salida estandar a un fichero:
+
+	$ orbit-name-server>myior
+
+Ahora ejecutamos el servidor que registrara un sirviente llamado Hello:
+
+	$ java helloServer `cat myior`
+
+Ya solo nos queda ejecutar el cliente. El cliente se conecta con el servicio
+de nombres y busca al sirviente Hello, obtiene su referencia y manda una
+peticion, retorna el resultado por pantalla:
+
+	$ java helloClient `cat myior`
+
+Tambien se puede emplear el cliente HelloWorld tradicional (sin cosnaming),
+para ello hay que hacer lo siguiente (suponemos que ya esta corriendo el
+servicio de nombres y el servidor HelloWorld):
+
+Resolvemos la IOR del servidor dentro del servicio de nombres:
+
+	$ name-client `cat myior` resolve Hello>hello.ior
+
+Ahora tenemos la IOR del servidor hello, podemos ejecutar por tanto nuestro
+hello world tradicional:
+
+	$ java helloClient `cat hello.ior`
+
+

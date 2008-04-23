@@ -1,0 +1,11 @@
+
+
+module HelloModule {
+
+  typedef sequence<octet> frame;
+
+  interface hello {
+    void puts(in frame value);
+	 frame gets();
+  };
+};

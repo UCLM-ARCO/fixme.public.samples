@@ -1,0 +1,16 @@
+#ifndef SimpleEventChannelAdmin_idl_
+#define SimpleEventChannelAdmin_idl_
+
+
+#include "CosEventChannel.idl"
+
+#pragma prefix "omg.org"
+
+
+module SimpleEventChannelAdmin {
+    interface EventChannelFactory {
+      CosEventChannelAdmin::EventChannel create_eventchannel ();
+    };
+};
+
+#endif

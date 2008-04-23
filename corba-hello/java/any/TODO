@@ -1,0 +1,3 @@
+
+ *  Al HelloServer y HelloClient hay que pasar una IOR directamente por linea
+    de comando. No acepta ficheros que contengan la IOR o una URL.

@@ -1,0 +1,7 @@
+
+
+nsd -ORBIIOPAddr inet:$HOSTNAME:12345 --ior ns.ior&
+sleep 3
+eventd -ORBNamingAddr inet:$HOSTNAME:12345 -ORBIIOPAddr inet:$HOSTNAME:23456&
+sleep 2
+name-client `cat ns.ior` resolve /EventChannelFactory

@@ -1,0 +1,8 @@
+
+#pragma prefix "uclm.es"
+
+module HelloModule {
+  interface hello {
+    void puts(in string str);
+  };
+};

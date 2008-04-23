@@ -1,0 +1,10 @@
+
+* Hacer un Makefile decente
+* Utilizar el mismo IDL que todos los demás hello's
+
+  module HelloModule {
+    interface hello {
+      void puts(in string str);
+    };
+  };
+	      
