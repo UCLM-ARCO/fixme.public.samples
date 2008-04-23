@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
+<!--Generated with glade3 3.4.4 on Thu Apr 24 00:40:06 2008 -->
+<glade-interface>
+  <widget class="GtkWindow" id="window">
+    <property name="visible">True</property>
+    <property name="resizable">False</property>
+    <signal name="delete_event" handler="on_window_delete_event"/>
+    <child>
+      <widget class="GtkVBox" id="vbox1">
+        <property name="visible">True</property>
+        <child>
+          <widget class="GtkAlignment" id="alignment1">
+            <property name="visible">True</property>
+            <property name="top_padding">20</property>
+            <property name="bottom_padding">10</property>
+            <property name="left_padding">20</property>
+            <property name="right_padding">20</property>
+            <signal name="delete_event" handler="gtk_main_quit"/>
+            <child>
+              <widget class="GtkEntry" id="entry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="editable">False</property>
+                <property name="xalign">0.5</property>
+              </widget>
+            </child>
+          </widget>
+        </child>
+        <child>
+          <widget class="GtkAlignment" id="alignment2">
+            <property name="visible">True</property>
+            <property name="top_padding">30</property>
+            <property name="bottom_padding">40</property>
+            <property name="left_padding">40</property>
+            <property name="right_padding">40</property>
+            <child>
+              <widget class="GtkButton" id="button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">Púlsame</property>
+                <property name="response_id">0</property>
+                <signal name="clicked" handler="on_button_clicked"/>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</glade-interface>
