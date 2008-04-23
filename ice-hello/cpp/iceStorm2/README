@@ -1,0 +1,19 @@
+
+- Se requiere Ice v3.0
+
+
+USO
+---
+   // Si no existe el directorio 'db' crearlo con.
+   $ mkdir db
+   
+   $ icebox --Ice.Config=config_service
+
+   // En otro terminal.	
+   // Creamos el topic HelloWorld y ejecutamos el Subscriber.
+   $ icestormadmin --Ice.Config=config -e "create HelloTopic"
+   $ ./subscriber
+
+   // En un terminal diferente ejecutamos el publisher
+   $ ./sublisher
+

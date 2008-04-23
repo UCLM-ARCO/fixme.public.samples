@@ -1,0 +1,8 @@
+Hello.Subscriber.Endpoints=udp:tcp
+IceBox.ServiceManager.Endpoints=tcp -p 9992
+IceBox.UseSharedCommunicator=1
+IceBox.Service.HelloService=HelloService:create
+HelloService.Proxy=ServiceHola:tcp -p 9993
+HelloService.Endpoints=tcp -p 9993
+IceStorm.TopicManager.Proxy=IceStorm/TopicManager:tcp -p 9996:udp -p 9996
+	

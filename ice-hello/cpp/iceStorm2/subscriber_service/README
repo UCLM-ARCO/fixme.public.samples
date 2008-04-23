@@ -1,0 +1,28 @@
+// ** Construir todos los ficheros necesarios basta con utilizar:
+$ make
+
+// ** Instalar la librería libHelloService.so "El Servicio"
+# make install
+
+// ** Arrancar el Canal de Eventos de Ice "IceStorm"
+$  icebox --Ice.Config=config_serviceStorm
+
+// ** Crear el topic en la base de datos "db"
+$ icestormadmin --Ice.Config=config -e "create HelloWorld"
+	
+// ** En otro terminal, ejecutar el siguiente comando para
+//    crear le servicio.
+$  icebox --Ice.Config=config_service &
+
+
+// ** Publicar un evento en es canal con:
+$ ./Publisher
+
+// ** Limpiar eliminando los ficheros innecesarios:
+$ make vclean
+
+// ** Desinstalar la librería libHelloService:
+# make uninstall
+
+// ** Para Desactivar el servicio, ejecutar: 
+$ iceboxadmin shutdown  --Ice.Config=config_service	

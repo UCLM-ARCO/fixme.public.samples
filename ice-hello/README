@@ -1,0 +1,4 @@
+
+En este módulo se incluyen implementaciones en varios lenguajes para ICE
+con la misma interfaz SLICE (fichero hello.ice). El objetivo que persigue
+este módulo es meramente didáctico. 

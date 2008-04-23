@@ -1,0 +1,9 @@
+IceBox.ServiceManager.Endpoints=tcp -p 7000
+IceBox.Service.IceStorm=IceStormService,31:createIceStorm --Ice.Config=config_icestorm
+
+Freeze.DbEnv.IceStorm.DbHome=db
+
+#Ice.Warn.Connections=1
+#Ice.Trace.Network=1
+#Ice.Trace.Protocol=1
+

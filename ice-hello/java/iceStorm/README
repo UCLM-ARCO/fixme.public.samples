@@ -1,0 +1,21 @@
+Requisitos:
+	- tener instalados java (de sun) y ice
+	- en el Makefile se especifica la ruta de Ice.jar para compilar los .java (comprobar)
+
+Pasos:
+	1- hacer un make en el directorio que se encuentra Makefile (iceStorm):
+		ice-hello/java/iceStorm$ make
+
+	2- en un terminal ejecutar icebox:
+		ice-hello/java/iceStorm$ icebox --Ice.Config=icebox.config
+
+	3- en otro terminal ejecutar el subscriber:
+		ice-hello/java/iceStorm$ java -classpath /usr/share/java/Ice.jar:. subscriber
+
+	4- en otro terminal ejecutar el publisher:
+		ice-hello/java/iceStorm$ java -classpath /usr/share/java/Ice.jar:. publisher
+
+	5- limpiar los archivos generados cuando terminemos la ejecución:
+		ice-hello/java/iceStorm$ make clean
+
+

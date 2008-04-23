@@ -1,0 +1,18 @@
+Para construir todos los ficheros necesarios basta con utilizar:
+$ make
+
+
+Para ejecutar el Servicio, ejecutar:
+$  icebox --Ice.Config=config_service &
+
+
+Para ejecutar el cliente, abrir otro terminal y ejecutar:
+$ cd client/
+$ ./clientBox
+
+En el primer terminal.
+Para eliminar todos los ficheros innecesarios, basta ejecutar:
+$ make vclean
+
+Para Desactivar el servicio, ejecutar: 
+$ iceboxadmin shutdown  --Ice.Config=config_service	

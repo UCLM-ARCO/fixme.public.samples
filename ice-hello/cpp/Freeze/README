@@ -1,0 +1,19 @@
+# -*- mode: fundamental; coding: utf-8 -*-
+
+CONTENIDO:
+==========
+
+Ejemplo de Servicio de Tablon de Anuncios usando persistencia con Freeze. Se define la interfaz
+'Message' que declara dos métodos:
+  
+  - void write(string msg): guarda la cadena que se pasa como argumto.
+  - string read(): retorna la cadena anteriormente guardada.
+
+Esta es la parte pública de la interfaz, pero para la persistencia, se crea
+una nueva clase que tiene el atributo 'data' donde almacenar el mensaje.
+
+Estan definidos un cliente y dos servidores. La persistencia se da en la parte del 
+servidor, por lo que el cliente es el mismo. De los dos servidores, uno implementa persistencia
+y el otro no: Client, Server y PersistentServer.
+
+

@@ -1,0 +1,43 @@
+-*- coding: utf-8 -*-
+
+- COMPILACIÓN
+-------------
+
+$ make
+
+- EJECUCIÓN
+-----------
+
+* Ejecutar glacier:
+
+glacier2router --Ice.Config=glacier.conf
+
+* Ejecutar servidor:
+
+./Server
+
+* Ejecutar cliente:
+
+./Client "Printer -t:tcp -p 9999"
+
+
+- EXPLICACIÓN
+-------------
+
+Glacier2 es un servicio de ICE que ofrece servicios de firewall
+a para la invocación de objetos remotos a través de un router. El fichero
+de configuración de glacier especifica lo siguiente (en este orden):
+
+* Nombre del router
+* Interfaz en la red de los servidores.
+* Interfaz en la red de los clientes.
+* Especificación de los permisos. Glacier2 debe funcionar con algún tipo
+de seguridad. En este caso, no se hace comprobación de los permisos. Sin 
+embargo, existen 2 formas de acceso seguro:
+   - Clave SSL.
+   - Certificados SSL.
+* Desactivación de ACM.
+* Únicamente se hace un intento de conexión.
+* Las 3 opciones siguientes son opciones de depuración para los clientes,
+servidores y Glacier2.
+
