@@ -2,7 +2,7 @@
 
 import gtk.glade
 
-class GladeWrapper:
+class GladeWrapper(object):
 
     def __init__(self, glade_file, root_widget=None):
         self.__glade = gtk.glade.XML(glade_file, root_widget)
@@ -11,6 +11,7 @@ class GladeWrapper:
 
     def get_widget(self, name):
         return self.__glade.get_widget(name)
+
 
     def __getattr__(self, name):
         try:
@@ -27,3 +28,52 @@ class GladeWrapper:
                     return ret
 
             raise AttributeError, "%s: %s" % (str(self.__class__), e)
+
+
+class GladeWidget(type):
+
+    def __call__(cls, *args):
+
+        assert hasattr(cls, 'WIDGET'), "'GladeWidget users must have a 'WIDGET' attribute"
+        gladefile, widget = cls.WIDGET.split(':')
+
+        dct = dict(cls.__dict__)
+        glade = gtk.glade.XML(gladefile, widget)
+        widget = glade.get_widget(widget)
+
+        # widget methods wrapping
+        for atr in dir(widget):
+            if not atr.startswith('__'): dct[atr] = getattr(widget, atr)
+
+        instance =  type(cls.__name__,
+                         (widget.__class__, GladeWrapper) + cls.__bases__,
+                         dct)(*args)
+
+        # simulate GladeWrapper initialize
+        instance._GladeWrapper__glade = glade
+        glade.signal_autoconnect(instance)
+
+        return instance
+
+
+#class GladeWidget2(type):
+#
+#    def __call__(cls, *args):
+#
+#        def getattribute(self, name):
+#            print '__invocando', name
+#
+#            if name != 'widget' and name in dir(self.widget):
+#                return object.__getattribute__(self.widget, name)
+#
+#            return object.__getattribute__(self, name)
+#
+#
+#        glade = gtk.glade.XML(cls.gladefile, cls.widget)
+#        widget = glade.get_widget(cls.widget)
+#
+#        dct = dict(cls.__dict__)
+#        dct['widget'] = widget
+#        dct['__getattribute__'] = getattribute
+#
+#        return type(cls.__name__, (widget.__class__,), dct)(args)
