@@ -32,22 +32,23 @@ class GladeWrapper(object):
 
 class GladeWidget(type):
 
-    def __call__(cls, *args):
+    def __call__(cls, *args, **kargs):
 
         assert hasattr(cls, 'WIDGET'), "'GladeWidget users must have a 'WIDGET' attribute"
         gladefile, widget = cls.WIDGET.split(':')
 
-        dct = dict(cls.__dict__)
         glade = gtk.glade.XML(gladefile, widget)
         widget = glade.get_widget(widget)
 
+        dct = dict(cls.__dict__)
+        
         # widget methods wrapping
         for atr in dir(widget):
             if not atr.startswith('__'): dct[atr] = getattr(widget, atr)
 
         instance =  type(cls.__name__,
                          (widget.__class__, GladeWrapper) + cls.__bases__,
-                         dct)(*args)
+                         dct)(*args, **kargs)
 
         # simulate GladeWrapper initialize
         instance._GladeWrapper__glade = glade
