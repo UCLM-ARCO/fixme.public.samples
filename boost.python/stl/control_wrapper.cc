@@ -1,5 +1,4 @@
 // -*- coding: utf-8 -*-
-#include <map>
 #include <boost/python.hpp>
 #include "control.h"
 
@@ -54,7 +53,7 @@ struct vector_item {
 
     typedef vector<T> Vector;
 
-    static T get(Vector const& self, int i) {
+    static T& get(Vector& self, int i) {
         if( i<0 ) i+=self.size();
         if( i>=0 && i<self.size() )
 	  return self[i];
@@ -70,34 +69,33 @@ struct vector_item {
 	}
         else IndexError();
     }
-//    static void del(T const& self, int i) {
-//        if( i<0 ) i+=self.size();
-//        if( i>=0 && i<self.size() ) {
-//	  typename Vector::iterator it = self.begin();
-//	  self.erase(it);
-//	}
-//        else IndexError();
-//    }
+    static void del(Vector& self, int i) {
+        if( i<0 ) i+=self.size();
+        if( i>=0 && i<self.size() ) {
+	  typename Vector::iterator it = self.begin() + i;
+	  self.erase(it);
+	}
+        else IndexError();
+    }
     static void add(Vector& self, T const& v) {
         self.push_back(v);
     }
 };
 
 
-
+typedef vector<string> VectorStr;
+typedef map<string,string> MapDict;
 
 
 BOOST_PYTHON_MODULE(Control)
 {
-
-
-  class_<VectorInt>("VectorInt")
-    .def("__len__", &VectorInt::size)
-    .def("clear", &VectorInt::clear)
+  class_<VectorStr>("VectorStr")
+    .def("__len__", &VectorStr::size)
+    .def("clear", &VectorStr::clear)
     .def("append", &vector_item<string>::add, with_custodian_and_ward<1,2>()) // to let container keep value
-    .def("__getitem__", &vector_item<string>::get) //, return_value_policy<copy_non_const_reference>())
+    .def("__getitem__", &vector_item<string>::get, return_value_policy<copy_non_const_reference>())
     .def("__setitem__", &vector_item<string>::set, with_custodian_and_ward<1,2>()) // to let container keep value
-    //    .def("__delitem__", &vector_item<VectorInt>::del)
+    .def("__delitem__", &vector_item<string>::del)
     ;
 
   class_<MapDict>("MapDict")
