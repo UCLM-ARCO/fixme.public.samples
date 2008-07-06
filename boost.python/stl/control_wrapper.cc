@@ -80,6 +80,10 @@ struct vector_item {
     static void add(Vector& self, T const& v) {
         self.push_back(v);
     }
+//    static bool in(Vector const& self, T const& v)
+//    {
+//        return find_eq(self.begin, self.end, v) != self.end();
+//    }
 };
 
 
@@ -96,6 +100,8 @@ BOOST_PYTHON_MODULE(Control)
     .def("__getitem__", &vector_item<string>::get, return_value_policy<copy_non_const_reference>())
     .def("__setitem__", &vector_item<string>::set, with_custodian_and_ward<1,2>()) // to let container keep value
     .def("__delitem__", &vector_item<string>::del)
+    .def("__iter__", boost::python::iterator<VectorStr>())
+
     ;
 
   class_<MapDict>("MapDict")
