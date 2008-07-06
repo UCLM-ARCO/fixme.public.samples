@@ -31,8 +31,9 @@ print "v[i]:       ", v[1]
 v[1] = "TWO"
 print "v[i]=x:     ", list(v)
 
-for i in range(len(v)):
-    print v[i]
+print "iterate:    ",
+for i in v: print i,
+print
 
 v.clear()
 print "v.clear():  ", list(v), len(v)
