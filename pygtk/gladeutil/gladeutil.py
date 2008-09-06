@@ -2,7 +2,7 @@
 
 import gtk.glade
 
-class GladeWrapper(object):
+class Wrapper(object):
 
     def __init__(self, glade_file, root_widget=None):
         self.__glade = gtk.glade.XML(glade_file, root_widget)
@@ -21,7 +21,7 @@ class GladeWrapper(object):
                 try:
                     ret = self.__glade.get_widget(name[3:])
                 except AttributeError:
-                    raise AttributeError("You must call GladeWrapper.__init__() in your derived class")
+                    raise AttributeError("You must call gladeutil.Wrapper.__init__() in your derived class")
 
                 if ret:
                     self.__dict__[name] = ret
@@ -30,34 +30,38 @@ class GladeWrapper(object):
             raise AttributeError, "%s: %s" % (str(self.__class__), e)
 
 
-class GladeWidget(type):
+class Widget(type):
 
     def __call__(cls, *args, **kargs):
 
-        assert hasattr(cls, 'WIDGET'), "'GladeWidget users must have a 'WIDGET' attribute"
-        gladefile, widget = cls.WIDGET.split(':')
+        assert hasattr(cls, 'WIDGET'), "'gladeutil.Widget users must have a 'WIDGET' attribute"
+        gladefile, widget = cls.WIDGET
 
         glade = gtk.glade.XML(gladefile, widget)
         widget = glade.get_widget(widget)
 
         dct = dict(cls.__dict__)
-        
+
+        print cls.__bases__
+
         # widget methods wrapping
         for atr in dir(widget):
             if not atr.startswith('__'): dct[atr] = getattr(widget, atr)
 
         instance =  type(cls.__name__,
-                         (widget.__class__, GladeWrapper) + cls.__bases__,
+                         (widget.__class__, Wrapper) + cls.__bases__,
                          dct)(*args, **kargs)
 
-        # simulate GladeWrapper initialize
-        instance._GladeWrapper__glade = glade
+        # simulate Wrapper initialize
+        instance._Wrapper__glade = glade
         glade.signal_autoconnect(instance)
 
         return instance
 
 
-#class GladeWidget2(type):
+# alternate implementation
+#
+#class Widget2(type):
 #
 #    def __call__(cls, *args):
 #
