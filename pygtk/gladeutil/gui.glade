@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Fri May  9 21:48:10 2008 -->
+<!--Generated with glade3 3.4.5 on Sat Sep  6 15:50:07 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="window">
     <property name="visible">True</property>
@@ -38,7 +38,7 @@
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label" translatable="yes">Púlsame</property>
+                <property name="label" translatable="yes">Push me</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="on_button_clicked"/>
               </widget>

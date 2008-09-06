@@ -1,16 +1,11 @@
+#!/usr/bin/python
 
-import gtk.glade
-import gladewrapper
+import gladeutil
 
+class Panel(object):
 
-class A(object):
-    pass
-
-
-class Panel(A):
-
-    __metaclass__ = gladewrapper.GladeWidget
-    WIDGET = 'gui.glade:vbox1'
+    __metaclass__ = gladeutil.Widget
+    WIDGET = ('gui.glade', 'vbox1')
 
     def __init__(self, pname):
         self.pname = pname
@@ -36,3 +31,4 @@ print 'p.is_focus():', p.is_focus()
 
 # gladewrapped
 print p.wg_entry
+print p._Wrapper__glade

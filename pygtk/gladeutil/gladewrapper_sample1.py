@@ -2,16 +2,16 @@
 # -*- coding: utf-8 -*-
 
 import gtk
-from gladewrapper import GladeWrapper
+from gladeutil import Wrapper
 
-class Application(GladeWrapper):
+class Application(Wrapper):
 
     def __init__(self):
-        GladeWrapper.__init__(self, 'gui.glade')
+        Wrapper.__init__(self, 'gui.glade')
         self.wg_window.connect('destroy', gtk.main_quit)
 
     def on_button_clicked(self, button):
-        self.wg_entry.set_text('¡Ejemplo mínimo!')
+        self.wg_entry.set_text('Minimal sample!')
 
 
 app = Application()
