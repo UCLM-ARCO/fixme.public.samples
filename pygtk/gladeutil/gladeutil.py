@@ -2,35 +2,46 @@
 
 import gtk.glade
 
+
 class Wrapper(object):
 
     def __init__(self, glade_file, root_widget=None):
-        self.__glade = gtk.glade.XML(glade_file, root_widget)
-        self.__glade.signal_autoconnect(self)
+        self.glade = gtk.glade.XML(glade_file, root_widget)
+        self.glade.signal_autoconnect(self)
 
 
     def get_widget(self, name):
-        return self.__glade.get_widget(name)
+        return self.glade.get_widget(name)
 
 
-    def __getattr__(self, name):
+    def __getattr__(self, key):
+        print 'trying to get', key
         try:
-            return self.__dict__[name]
-        except KeyError, e:
-            if name.startswith("wg_"):
+            #return self.glade.get_widget(key[3:])
+            #return getattr(self, key)
+            #return self.__dict__[key]
+            return object.__getattribute__(self, key)
+
+        except AttributeError, e:
+            if key.startswith("wg_"):
                 try:
-                    ret = self.__glade.get_widget(name[3:])
+                    ret = self.glade.get_widget(key[3:])
                 except AttributeError:
                     raise AttributeError("You must call gladeutil.Wrapper.__init__() in your derived class")
 
                 if ret:
-                    self.__dict__[name] = ret
+                    setattr(self, key, ret)
+                    #self.__dict__[key] = ret
                     return ret
 
             raise AttributeError, "%s: %s" % (str(self.__class__), e)
 
 
 class Widget(type):
+
+
+    def init(self):
+        Wrapper.__init__(self)
 
     def __call__(cls, *args, **kargs):
 
@@ -41,21 +52,21 @@ class Widget(type):
         widget = glade.get_widget(widget)
 
         dct = dict(cls.__dict__)
-
-        print cls.__bases__
+        bases = (widget.__class__, Wrapper)
+        if not object in cls.__bases__:
+            bases += cls.__bases__
 
         # widget methods wrapping
         for atr in dir(widget):
             if not atr.startswith('__'): dct[atr] = getattr(widget, atr)
 
-        instance =  type(cls.__name__,
-                         (widget.__class__, Wrapper) + cls.__bases__,
-                         dct)(*args, **kargs)
+        instance = type(cls.__name__, bases, dct)(*args, **kargs)
 
         # simulate Wrapper initialize
-        instance._Wrapper__glade = glade
+        instance.glade = glade
         glade.signal_autoconnect(instance)
 
+        print "listo"
         return instance
 
 

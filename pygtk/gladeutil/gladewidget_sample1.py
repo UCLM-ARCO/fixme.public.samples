@@ -2,7 +2,7 @@
 
 import gladeutil
 
-class Panel(object):
+class Panel:
 
     __metaclass__ = gladeutil.Widget
     WIDGET = ('gui.glade', 'vbox1')
@@ -31,4 +31,4 @@ print 'p.is_focus():', p.is_focus()
 
 # gladewrapped
 print p.wg_entry
-print p._Wrapper__glade
+print p.glade
