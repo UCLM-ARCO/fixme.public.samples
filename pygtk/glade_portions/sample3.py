@@ -3,13 +3,12 @@ import sys, gtk
 sys.path.append('gladeutil')
 import gladeutil
 
-class Action:
+class Action(object):
 
     __metaclass__ = gladeutil.Widget
     WIDGET = ('gui.glade', 'action')
 
     def __init__(self, n, name):
-        print self.wg_label
         self.wg_label.set_text(str(n))
         self.wg_button.set_label(name)
 
@@ -33,6 +32,9 @@ class Application(gladeutil.Wrapper):
         self.wg_entry.set_text('')
 
         action = Action(self.n, name)
+        action.show_all()
+        print action.get_children()
+
         self.n += 1
         self.wg_box.pack_start(action)
 
