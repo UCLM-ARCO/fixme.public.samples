@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Sat Sep  6 15:50:07 2008 -->
+<!--Generated with glade3 3.4.5 on Wed Sep 10 12:17:28 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="window">
     <property name="visible">True</property>
     <property name="resizable">False</property>
+    <signal name="delete_event" handler="quit"/>
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -12,7 +13,7 @@
           <widget class="GtkAlignment" id="alignment1">
             <property name="visible">True</property>
             <property name="top_padding">20</property>
-            <property name="bottom_padding">10</property>
+            <property name="bottom_padding">20</property>
             <property name="left_padding">20</property>
             <property name="right_padding">20</property>
             <signal name="delete_event" handler="gtk_main_quit"/>
@@ -28,10 +29,10 @@
         <child>
           <widget class="GtkAlignment" id="alignment2">
             <property name="visible">True</property>
-            <property name="top_padding">30</property>
-            <property name="bottom_padding">40</property>
-            <property name="left_padding">40</property>
-            <property name="right_padding">40</property>
+            <property name="top_padding">10</property>
+            <property name="bottom_padding">10</property>
+            <property name="left_padding">10</property>
+            <property name="right_padding">10</property>
             <child>
               <widget class="GtkButton" id="button">
                 <property name="visible">True</property>
@@ -45,6 +46,8 @@
             </child>
           </widget>
           <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="position">1</property>
           </packing>
         </child>

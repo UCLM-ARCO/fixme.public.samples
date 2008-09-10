@@ -4,7 +4,7 @@
 import gtk, gladeutil
 
 class Application(gladeutil.Wrapper):
-    gtk_main_quit = gtk.main_quit
+    quit = gtk.main_quit
 
     def on_button_clicked(self, button):
         self.wg_entry.set_text('Minimal sample!')
