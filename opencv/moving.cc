@@ -66,14 +66,28 @@ main (int argc, char* argv[])
 	cvReleaseImage (&last);
 	last = gray;
 
-	CvScalar color = CV_RGB(100, 100, 100);
+	CvScalar color = CV_RGB(100, 255, 100);
 	CvRect r = cvBoundingRect(res, 0);
-	cvRectangle(res, 
-		    cvPoint(r.x, r.y), 
-		    cvPoint(r.x+r.width, r.y+r.height), 
-		    color);
+	//cvRectangle(res, cvPoint(r.x, r.y), 
+	//            cvPoint(r.x+r.width, r.y+r.height), color);
+	//cvShowImage ("Prb", res);
 
-	cvShowImage ("Prb", res);
+	static CvPoint current = cvPoint(0,0);
+	if (r.width != 0 && r.height != 0)
+	    current = cvPoint(r.x+r.width/2, r.y+r.height/2);
+
+	// user feedback
+	IplImage* out = cvCloneImage (img);
+	cvCircle(out, current, 10, color, 3);
+	cvLine(out, cvPoint(current.x, current.y - 15), 
+	       cvPoint(current.x, current.y + 15), color, 3);
+	cvLine(out, cvPoint(current.x - 15, current.y), 
+	       cvPoint(current.x + 15, current.y), color, 3);
+	cvRectangle(out, cvPoint(r.x, r.y),
+	            cvPoint(r.x+r.width, r.y+r.height), color);
+	cvShowImage ("Prb", out);
+	cvReleaseImage (&out);
+	
 	cvReleaseImage (&res);
 
 	int c = (cvWaitKey(10) & 255);
