@@ -38,7 +38,7 @@ while True:
     cv.cvReleaseImage (last)
     last = gray
 
-    color = cv.CV_RGB(100, 100, 100)
+    color = cv.CV_RGB(100, 255, 100)
     r = cv.cvBoundingRect(res, 0)
     if r.width != 0 and r.height != 0:
         current = cv.cvPoint(r.x+r.width/2, r.y+r.height/2)
