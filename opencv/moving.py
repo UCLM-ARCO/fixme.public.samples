@@ -16,6 +16,7 @@ while True:
     if not gui.cvGrabFrame(capture):
         break
     img = gui.cvRetrieveFrame (capture)
+    o = cv.cvCloneImage (img)
 
     # version en gris y sin ruido
     gray = cv.cvCreateImage (cv.cvSize(img.width, img.height),
@@ -23,7 +24,7 @@ while True:
     cv.cvCvtColor (img, gray, cv.CV_BGR2GRAY)
     cv.cvEqualizeHist (gray, gray)
     cv.cvSmooth (gray, gray, cv.CV_GAUSSIAN, 9, 9)
-	
+
     # diferencia con la ultima
     if last == None:
         last = cv.cvCloneImage (gray)
@@ -45,9 +46,9 @@ while True:
     # user feedback
     if showRes:
         cv.cvCircle(res, current, 10, color, 3)
-        cv.cvLine(res, cv.cvPoint(current.x, current.y - 15), 
+        cv.cvLine(res, cv.cvPoint(current.x, current.y - 15),
                   cv.cvPoint(current.x, current.y + 15), color, 3)
-        cv.cvLine(res, cv.cvPoint(current.x - 15, current.y), 
+        cv.cvLine(res, cv.cvPoint(current.x - 15, current.y),
                   cv.cvPoint(current.x + 15, current.y), color, 3)
         cv.cvRectangle(res, cv.cvPoint(r.x, r.y),
                        cv.cvPoint(r.x+r.width, r.y+r.height), color)
