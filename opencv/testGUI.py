@@ -1,19 +1,17 @@
 #!/usr/bin/python
 
-import opencv.cv as cv
-import opencv.highgui as oh
-import sys
+import opencv as cv
+import opencv.highgui as gui
 
-try:
-    oh.cvNamedWindow("LiveVideo", oh.CV_WINDOW_AUTOSIZE)
-    cam = oh.cvCreateCameraCapture( 0 )
+capture = gui.cvCreateCameraCapture(gui.CV_CAP_ANY)
+gui.cvNamedWindow ("Prb", gui.CV_WINDOW_AUTOSIZE)
 
-    while(1):
-        f = oh.cvQueryFrame(cam)
-        f0 = cv.cvCloneImage(f)
-        oh.cvShowImage("LiveVideo",f0)
+while True:
+    img = gui.cvQueryFrame (capture)
+    gui.cvShowImage ("Prb", img)
 
-except:
-    cv.cvReleaseCapture(cam)
-    oh.cvDestroyWindow("LiveVideo")
-    print sys.exc_info()
+    c = gui.cvWaitKey(10)
+    if c == '\x1b':
+        break
+
+gui.cvDestroyWindow ("Prb");
