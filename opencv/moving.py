@@ -7,6 +7,8 @@ import opencv.highgui as gui
 capture = gui.cvCreateCameraCapture(gui.CV_CAP_ANY)
 last = None
 res = None
+current = cv.cvPoint(0,0)
+showRes = False
 
 gui.cvNamedWindow ("Prb", gui.CV_WINDOW_AUTOSIZE)
 
@@ -38,13 +40,31 @@ while True:
 
     color = cv.CV_RGB(100, 100, 100)
     r = cv.cvBoundingRect(res, 0)
-    cv.cvRectangle(res, 
-                   cv.cvPoint(r.x, r.y), 
-                   cv.cvPoint(r.x+r.width, r.y+r.height), 
-                   color)
+    if r.width != 0 and r.height != 0:
+        current = cv.cvPoint(r.x+r.width/2, r.y+r.height/2)
 
-    gui.cvShowImage ("Prb", res)
+    if showRes:
+        cv.cvCircle(res, current, 10, color, 3)
+        cv.cvLine(res, cv.cvPoint(current.x, current.y - 15), 
+                  cv.cvPoint(current.x, current.y + 15), color, 3)
+        cv.cvLine(res, cv.cvPoint(current.x - 15, current.y), 
+                  cv.cvPoint(current.x + 15, current.y), color, 3)
+        cv.cvRectangle(res, cv.cvPoint(r.x, r.y),
+                       cv.cvPoint(r.x+r.width, r.y+r.height), color)
+        gui.cvShowImage ("Prb", res)
+
     cv.cvReleaseImage(res)
+
+    # user feedback
+    o = cv.cvCloneImage (img)
+    cv.cvCircle(o, current, 10, color, 3)
+    cv.cvLine(o, cv.cvPoint(current.x, current.y - 15), 
+              cv.cvPoint(current.x, current.y + 15), color, 3)
+    cv.cvLine(o, cv.cvPoint(current.x - 15, current.y), 
+              cv.cvPoint(current.x + 15, current.y), color, 3)
+    cv.cvRectangle(o, cv.cvPoint(r.x, r.y),
+                   cv.cvPoint(r.x+r.width, r.y+r.height), color)
+    gui.cvShowImage ("Prb", o)
 
     c = gui.cvWaitKey(10)
     if c == '\x1b':
