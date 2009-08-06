@@ -12,6 +12,16 @@
 
 using namespace std;
 
+
+void 
+myMouseCallback(int event, int x, int y, int flags, void* param)
+{
+    if (event == CV_EVENT_LBUTTONDOWN) {
+	IplImage** res = (IplImage**) param;
+	cout << "Target: " << x << ", " << y << endl;
+    }
+}
+
 int
 main (int argc, char* argv[])
 {
@@ -23,9 +33,12 @@ main (int argc, char* argv[])
 	exit(1);
     }
 
-    cvNamedWindow ("Prb", CV_WINDOW_AUTOSIZE);
     IplImage* last = NULL;
     IplImage* res = NULL;
+
+    cvNamedWindow ("Prb", CV_WINDOW_AUTOSIZE);
+    cvSetMouseCallback("Prb", myMouseCallback, &res);
+
     while (true) {
 	if (!cvGrabFrame (capture))
 	    break;
