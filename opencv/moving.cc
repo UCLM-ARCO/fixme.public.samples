@@ -1,5 +1,6 @@
 #include <cv.h>
 #include <highgui.h>
+
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
@@ -9,14 +10,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+using namespace std;
 
 int
 main (int argc, char* argv[])
 {
-    CvCapture* capture =
-	(argc > 1)? cvCaptureFromFile (argv[1]) : cvCaptureFromCAM(CV_CAP_ANY);
+    CvCapture* capture = (argc > 1)
+	? cvCaptureFromFile (argv[1]) 
+	: cvCaptureFromCAM(CV_CAP_ANY);
     if (!capture) {
-	throw "ERROR: capture is NULL \n";
+	cerr << "ERROR: capture is NULL \n";
+	exit(1);
     }
 
     cvNamedWindow ("Prb", CV_WINDOW_AUTOSIZE);
@@ -33,7 +37,7 @@ main (int argc, char* argv[])
 					IPL_DEPTH_8U, 1);
 	cvCvtColor (img, gray, CV_BGR2GRAY);
 	cvEqualizeHist (gray, gray);
-	cvSmooth (gray, gray);
+	cvSmooth (gray, gray, CV_GAUSSIAN, 9, 9);
 	
 	// diferencia con la ultima (solo diferencias grandes)
 	if (!last)
@@ -44,10 +48,17 @@ main (int argc, char* argv[])
 				 IPL_DEPTH_8U, 1);
 	    cvSetZero( res );
 	}
-	cvAbsDiff (gray, last, res);
-	cvThreshold(res, res, 70, 255, CV_THRESH_BINARY);
+	cvSub (gray, last, res);
+	cvThreshold(res, res, 128, 255, CV_THRESH_BINARY);
 	cvReleaseImage (&last);
 	last = gray;
+
+	CvScalar color = CV_RGB(100, 100, 100);
+	CvRect r = cvBoundingRect(res, 0);
+	cvRectangle(res, 
+		    cvPoint(r.x, r.y), 
+		    cvPoint(r.x+r.width, r.y+r.height), 
+		    color);
 
 	cvShowImage ("Prb", res);
 	cvReleaseImage (&res);
