@@ -3,14 +3,24 @@
 import opencv as cv
 import opencv.highgui as gui
 
-
 capture = gui.cvCreateCameraCapture(gui.CV_CAP_ANY)
 last = None
 res = None
 current = cv.cvPoint(0,0)
 showRes = False
 
+class MouseCb:
+    def mouseCb(self,event, x, y, flags):
+        if event == gui.CV_EVENT_LBUTTONDOWN:
+            print "Target: %d, %d" % (x, y)
+
+
+def myMouseCallback(event, x, y, flags, cb):
+    cb.mouseCb(event, x, y, flags)
+
+
 gui.cvNamedWindow ("Prb", gui.CV_WINDOW_AUTOSIZE)
+gui.cvSetMouseCallback("Prb", myMouseCallback, MouseCb())
 
 while True:
     if not gui.cvGrabFrame(capture):
