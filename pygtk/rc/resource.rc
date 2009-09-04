@@ -1,16 +1,6 @@
 style "buttondef"
 {
-  fg[PRELIGHT] = { 0, 1.0, 1.0 }
-  bg[PRELIGHT] = { 0, 0, 1.0 }
-  bg[ACTIVE] = { 1.0, 0, 0 }
-  fg[ACTIVE] = { 0, 1.0, 0 }
-  bg[NORMAL] = { 1.0, 0, 0 }
-  fg[NORMAL] = { .99, 0, .99 }
-  bg[INSENSITIVE] = { 1.0, 1.0, 1.0 }
-  fg[INSENSITIVE] = { 1.0, 0, 1.0 }
-
-  # description from xfontsel
-  font = "-adobe-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*"
+  font_name = "Sans 20"
 
 }
 

@@ -10,7 +10,6 @@ win.connect('destroy', gtk.main_quit)
 
 button = gtk.Button("Example test")
 button.set_name('my_button')
-print button.get_name()
 
 win.add(button)
 
