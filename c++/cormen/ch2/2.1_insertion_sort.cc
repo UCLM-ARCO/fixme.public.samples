@@ -9,10 +9,8 @@ main()
 	set<string> sorted;
 	string str;
 
-	while (!cin.eof()) {
-		cin >> str;
+	while (cin >> str)
 		sorted.insert(str);
-	}
 
 	for (set<string>::const_iterator i = sorted.begin(); 
 	     i != sorted.end(); ++i)
