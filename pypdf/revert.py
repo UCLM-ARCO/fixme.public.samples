@@ -10,8 +10,8 @@ input = pyPdf.PdfFileReader(file(sys.argv[1], 'rb'))
 print "title = %s" % input.getDocumentInfo().title
 print "npages = %s" % input.getNumPages()
 
-for i in range(input.getNumPages())[::-1]:
-    output.addPage(input.getPage(i))
+for page in reversed(input.pages):
+    output.addPage(page)
 
 fdout = file(os.path.splitext(sys.argv[1])[0] + '.out.pdf', 'wb')
 output.write(fdout)
