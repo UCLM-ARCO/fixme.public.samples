@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# To reverse a PDF document
+
 import os, sys
 import pyPdf
 
