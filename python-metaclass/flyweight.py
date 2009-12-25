@@ -10,7 +10,7 @@ class Flyweight(type):
     def __call__(cls, key, *args, **kw):
         instance = cls.__instances.get(key)
         if instance is None:
-            instance = type(cls, key, *args, **kw)
+            instance = type.__call__(cls, key, *args, **kw)
             cls.__instances[key] = instance
         return instance
 
