@@ -2,7 +2,7 @@
 
 import time
 
-class Cache(type):
+class Flyweight(type):
     def __init__(cls, name, bases, dct):
         cls.__instances = {}
         type.__init__(cls, name, bases, dct)
@@ -14,15 +14,17 @@ class Cache(type):
             cls.__instances[key] = instance
         return instance
 
-class A:
-    __metaclass__ = Cache
+
+class Astro:
+    __metaclass__ = Flyweight
 
     def __init__(self, key):
-        print "Building instance", key
+        print "Creando la instancia '%s'..." % key
         time.sleep(2)
+        print "'%s' creado" % key
 
 
-a = A('i1')
-b = A('i1')
-assert a == b
-c = A('i2')
+a = Astro('luna')
+b = Astro('luna')
+assert a is b
+c = Astro('sol')
