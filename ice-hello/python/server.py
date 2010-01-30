@@ -10,7 +10,7 @@ class HelloI(UCLM.Hello):
 class server(Ice.Application):
     def run(self, argv):
         self.shutdownOnInterrupt()
-    
+
         # 1) Creamos un adaptador de Objetos.
         adapter = self.communicator().\
                   createObjectAdapterWithEndpoints("Server", "default -p 9999")
@@ -19,12 +19,12 @@ class server(Ice.Application):
         obj = HelloI()
 
         # 3) Informamos al adaptador acerca del nuevo sirviente "Hello"
-        adapter.add(obj, Ice.stringToIdentity("Hello"))
+        adapter.add(obj, self.communicator().stringToIdentity("Hello"))
 
         # 4) Activacion del Adaptador.
         adapter.activate()
         self.communicator().waitForShutdown()
-            
+
         return 0
 
 
