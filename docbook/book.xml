@@ -1,0 +1,27 @@
+<?xml  version="1.0" encoding="utf-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+                 "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<book
+  xmlns:xi="http://www.w3.org/2001/XInclude" lang="es"
+  id="a_sample_book">
+
+  <bookinfo>
+    <title>Título del libro</title>
+  </bookinfo>
+
+  <chapter>
+    <title>Título del capítulo</title>
+
+    <para>
+      Texto del primer <quote>párrafo</quote>.
+    </para>
+  </chapter>
+
+  <appendix>
+    <title>Título del Apéndice</title>
+
+    <para>
+      Texto del apéndice
+    </para>
+  </appendix>
+</book>
