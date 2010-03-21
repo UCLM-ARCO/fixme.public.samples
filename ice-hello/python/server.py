@@ -19,7 +19,7 @@ class server(Ice.Application):
         obj = HelloI()
 
         # 3) Informamos al adaptador acerca del nuevo sirviente "Hello"
-        adapter.add(obj, self.communicator().stringToIdentity("Hello"))
+        print adapter.add(obj, self.communicator().stringToIdentity("Hello"))
 
         # 4) Activacion del Adaptador.
         adapter.activate()

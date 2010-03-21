@@ -1,5 +1,5 @@
 module UCLM {
   interface Hello {
-	 void puts(string str);
+    void puts(string str);
   };
 };
