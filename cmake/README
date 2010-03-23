@@ -23,10 +23,10 @@ libstatic
       Una librería estática con ranlib.
 
 libstatic
-      Una librería dinámica.
+      Una librería compartida.
 
-hello_static
-      Un programa trivial que usa "libstatic".
+hello_shared
+      Un programa trivial que usa la librería compartida.
 
 CMakeLists.txt
 ==============
