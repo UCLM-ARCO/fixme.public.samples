@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-DIRS=hello single_binary hello_ice libstatic
+DIRS=hello single_binary hello_ice libstatic libshared
 
 clean:
 	$(RM) *~

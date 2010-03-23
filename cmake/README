@@ -1,3 +1,6 @@
+-*- coding:utf-8 -*-
+
+
 Ejemplos
 ========
 
@@ -19,6 +22,9 @@ hello_ice
 libstatic
       Una librería estática con ranlib.
 
+libstatic
+      Una librería dinámica.
+
 hello_static
       Un programa trivial que usa "libstatic".
 
@@ -35,3 +41,29 @@ del compilador adecuado y otras reglas.
 Una lista completa de los comandos para este archivo se puede ver en:
 
 http://www.cmake.org/cmake/help/cmake-2-8-docs.html#section_Commands
+
+Modo de uso
+===========
+
+Como ya se ha dicho, a partir del fichero CMakeLists.txt se genera
+todos los archivos necesarios. Sin embargo, no existe una forma
+automática de limpiar todos estos archivos una vez se han generado
+(al menos, que haya podido ver).
+
+Por ello, para compilar cualquiera de los ejemplos se recomienda lo
+siguiente:
+
+cmake$ cd hello_ice
+hello_ice$ mkdir bin
+hello_ice$ cd bin
+bin$ cmake ..
+
+CMake generará todo en el directorio bin. Una vez generado:
+
+bin$ make
+
+Y comenzará la compilación del proyecto.
+
+Bastará con borrar el directorio bin creado para limpiar todo lo
+generado por CMake.
+
