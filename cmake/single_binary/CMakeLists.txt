@@ -1,0 +1,8 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+PROJECT(hello)
+ADD_EXECUTABLE(hello hello.cpp)
+
+# set (CMAKE_INSTALL_PREFIX /tmp)
+
+install (TARGETS hello DESTINATION bin)
