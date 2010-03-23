@@ -5,7 +5,7 @@ Estos directorios contienen programas de ejemplo que utilizan
 CMake para su compilación. Cada uno hace enfasis en una
 característica concreta:
 
-hello
+single_binary
       Un programa trivial que no usa ninguna librería.
 
 header
