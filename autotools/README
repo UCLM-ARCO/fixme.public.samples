@@ -1,0 +1,58 @@
+Ejemplos
+========
+
+Estos directorios contienen programas de ejemplo que utilizan
+autotools para su compilación. Cada uno hace enfasis en una
+característica concreta:
+
+hello
+      Un programa trivial que no usa ninguna librería.
+
+hello_gtk
+      Programa "hello workd" de GTK. Utiliza pkg-config para compilar
+      y enlazar con libgtk2.0.
+
+hello_ice
+      Objeto Ice básico. Utiliza la librería Ice, que no tiene
+      soporte para pkg-config.
+
+libstatic
+      Una librería estática con ranlib.
+
+hello_static
+      Un programa trivial que usa "libstatic".
+
+
+Fichero configure.ac
+====================
+
+El orden de las macros en el fichero configure.ac debería seguir el
+mismo patrón. Sirva el siguiente fragmento commo plantilla.
+
+   # Prelude.
+   AC_INIT([hello], [1.0], [bug-report@address])
+   AM_INIT_AUTOMAKE([-Wall -Werror])
+
+   # Checks for programs.
+   # Checks for libraries.
+   # Checks for header files.
+   # Checks for typedefs, structures, and compiler characteristics.
+   # Checks for library functions.
+   # Output files.
+
+   AC_CONFIG_FILES([FILES])
+   AC_OUTPUT
+
+
+
+Instalación
+===========
+
+* Por defecto "prefix" es /
+* Se puede instalar en el home del usuario con::
+
+   ./configure prefix=$HOME/usr
+
+
+
+
