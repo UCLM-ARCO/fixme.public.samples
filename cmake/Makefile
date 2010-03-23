@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-DIRS=hello single_binary
+DIRS=hello single_binary  hello_ice
 
 clean:
 	$(RM) *~

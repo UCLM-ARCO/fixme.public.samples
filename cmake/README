@@ -1,0 +1,37 @@
+Ejemplos
+========
+
+Estos directorios contienen programas de ejemplo que utilizan
+CMake para su compilación. Cada uno hace enfasis en una
+característica concreta:
+
+hello
+      Un programa trivial que no usa ninguna librería.
+
+header
+      Utilizando un archivo de cabecera (dummy/dummy.h) y una
+      definición de clase (dummy.cpp), se crea un binario.
+
+hello_ice
+      Objeto Ice básico. Utiliza la librería Ice, que no tiene
+      soporte para pkg-config.
+
+libstatic
+      Una librería estática con ranlib.
+
+hello_static
+      Un programa trivial que usa "libstatic".
+
+CMakeLists.txt
+==============
+
+Este fichero es el único que hay que crear de forma manual, el resto
+se genera por CMake. En este fichero se añaden las reglas necesarias
+para la compilación y la detección de librerías.
+
+CMake es capaz de deducir ciertas reglas implícitas como la búsqueda
+del compilador adecuado y otras reglas.
+
+Una lista completa de los comandos para este archivo se puede ver en:
+
+http://www.cmake.org/cmake/help/cmake-2-8-docs.html#section_Commands
