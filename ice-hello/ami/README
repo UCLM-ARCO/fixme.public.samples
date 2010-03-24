@@ -1,0 +1,3 @@
+Ejemplo minimo de una llamada con AMI (Asynchronous Method Invocation),
+que muestra que la llamada no se bloquea y se pueden seguir haciendo
+otras cosas mientras se espera el retorno del trabajo.
