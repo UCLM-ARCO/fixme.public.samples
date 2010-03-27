@@ -2,43 +2,28 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 PROJECT(hello_ice)
 
-include (CheckLibraryExists)
-check_library_exists (Ice accept "" ICE_FOUND)
+FIND_LIBRARY(ice_lib Ice)
+FIND_PATH(ice_path Ice)
 
-include_directories(.)
+IF(NOT ice_path)
+  MESSAGE(FATAL_ERROR "** Librería de Ice no encontrada")
+ENDIF()
 
-# set(SLICES hello.ice)
-# set(SLICE_DIR slice)
+INCLUDE_DIRECTORIES(
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${ice_path}
+  )
 
-# set(slices_cpp)
-# set(slices_h)
+SET(SLICES ${CMAKE_CURRENT_SOURCE_DIR}/slice/hello.ice)
 
-# foreach(s ${SLICES})
-#   string(REGEX REPLACE "(.*).ice" "\\1.cpp" cpp ${s})
-#   string(REGEX REPLACE "(.*).ice" "\\1.h" h ${s})
-
-#   list(APPEND slices_cpp ${cpp})
-#   list(APPEND slices_h ${h})
-
-#   add_custom_command (
-#     OUTPUT ${cpp} ${h}
-#     COMMAND slice2cpp ${SLICE_DIR}/${SLICES} -I ${SLICE_DIR}
-#     DEPENDS ${S}
-#     )
-
-# endforeach(s)
-
-add_custom_command (
+ADD_CUSTOM_COMMAND (
   OUTPUT hello.cpp hello.h
-  COMMAND slice2cpp slice/hello.ice -I slice
-  DEPENDS slice/hello.ice
+  COMMAND slice2cpp ${SLICES}
   )
 
 
-add_executable(Client hello.cpp Client.cpp)
-add_executable(Server hello.cpp helloI.cpp Server.cpp)
-target_link_libraries(Server Ice)
-target_link_libraries(Client Ice)
-
-install(TARGETS Client Server DESTINATION bin)
-
+ADD_EXECUTABLE(Client hello.cpp Client.cpp)
+ADD_EXECUTABLE(Server hello.cpp helloI.cpp Server.cpp)
+TARGET_LINK_LIBRARIES(Server ${ice_lib})
+TARGET_LINK_LIBRARIES(Client ${ice_lib})
