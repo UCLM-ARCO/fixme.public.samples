@@ -54,16 +54,42 @@ Por ello, para compilar cualquiera de los ejemplos se recomienda lo
 siguiente:
 
 cmake$ cd hello_ice
-hello_ice$ mkdir bin
-hello_ice$ cd bin
-bin$ cmake ..
+hello_ice$ mkdir build
+hello_ice$ cd build
+build$ cmake ..
 
-CMake generará todo en el directorio bin. Una vez generado:
+CMake generará todo en el directorio build. Una vez generado:
 
-bin$ make
+build$ make
 
 Y comenzará la compilación del proyecto.
 
-Bastará con borrar el directorio bin creado para limpiar todo lo
+Bastará con borrar el directorio build creado para limpiar todo lo
 generado por CMake.
 
+
+Install
+-------
+
+Para instalar con un PREFIX determinado, por ejemplo, /usr es
+necesario ejecutar:
+
+$ cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+
+También posible cambiar el DESTDIR una vez está todo configurado:
+
+$ make install DESTDIR=path
+
+Uninstall
+---------
+
+Los desarrolladores de CMake justifican que no se incluye un objetivo
+de 'uninstall' en el Makfile generado porque:
+
+"We do not want 'make uninstall' to remove useful files from the system".
+
+http://www.cmake.org/Wiki/CMake_FAQ#Can_I_do_.22make_uninstall.22_with_CMake.3F
+
+La forma más fácil de quitar los archivos que se han instalado es:
+
+$ cat install_manifest.txt | rm $(xargs)
