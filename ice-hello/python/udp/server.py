@@ -17,7 +17,7 @@ class server(Ice.Application):
 
         obj = HelloI()
 
-        adapter.add(obj, Ice.stringToIdentity("Hello"))
+        adapter.add(obj, self.communicator().stringToIdentity("Hello"))
     
         adapter.activate()
         self.communicator().waitForShutdown()
