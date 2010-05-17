@@ -1,11 +1,11 @@
+#!/usr/bin/python
+import math
+
 import gtk
 import cairo
 import pango
 import pangocairo
 
-
-import math
-import cairo
 
 WIDTH, HEIGHT = 256, 256
 
