@@ -11,7 +11,7 @@ class Person:
     def __str__(self):
         return "<Person %s %s>" % (self.firstname, self.lastname)
 
-person = Person("Federico", "Martiñez")
+person = Person("Juan", "Nadie Conocido")
 
 env = Environment(loader=FileSystemLoader('.'))
 template = env.get_template('sample.tmpl')
