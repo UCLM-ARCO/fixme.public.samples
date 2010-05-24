@@ -24,7 +24,7 @@ class myApp:
         desc = pango.FontDescription("helvetica bold 20")
         layout.set_font_description(desc)
 
-        layout.set_text("你好世界!")
+        layout.set_text("hola cairo!")
 
         cr.move_to(35, 5)
         cr.show_layout(layout)
