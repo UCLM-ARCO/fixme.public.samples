@@ -1,0 +1,36 @@
+- Ejecuta:
+
+  $ xgettext --keyword=_ -o sample.pot sample.tmpl
+  $ msginit -i sample.pot -l es_ES -o es_ES.po
+  $ msginit -i sample.pot -l en_US -o en_US.po
+
+
+- Edita las traducciones en "es_ES.po" para que quede así:
+
+#: sample.tmpl:2
+msgid "Firstname"
+msgstr "Nombre"
+
+#: sample.tmpl:3
+msgid "Surname"
+msgstr "Apellido"
+
+
+- Ejecuta:
+
+  $ mkdir  -p i18n/es_ES/LC_MESSAGES
+  $ msgfmt -o i18n/es_ES/LC_MESSAGES/sample.mo es.po
+
+  $ mkdir  -p i18n/en_US/LC_MESSAGES
+  $ msgfmt -o i18n/en_US/LC_MESSAGES/sample.mo en_US.po
+
+
+- Prueba:
+
+  $ LANG=es_ES ./render.py
+- Nombre: Juan
+- Apellido: Nadie Conocido
+
+  $ LANG=en_US ./render.py
+- Firstname: Juan
+- Surname: Nadie Conocido
