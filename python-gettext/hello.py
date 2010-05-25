@@ -1,26 +1,25 @@
 #!/usr/bin/python
 
+# from: http://www.learningpython.com/2006/12/03/translating-your-pythonpygtk-application/
+
 import sys, os
 
 import locale
 import gettext
 
-APP_NAME = "hello"
+APP = "hello"
 
-local_path = os.path.realpath(os.path.dirname(sys.argv[0]))
 langs = []
-lc, encoding = locale.getdefaultlocale() #Check the default locale
+lc, encoding = locale.getdefaultlocale()
 if lc: langs = [lc]
 
 language = os.environ.get('LANGUAGE', None)
-if (language): langs += language.split(":")
+if language: langs += language.split(":")
 langs += ["es_ES"]
 
-gettext.bindtextdomain(APP_NAME, local_path)
-gettext.textdomain(APP_NAME)
-
-lang = gettext.translation(APP_NAME, local_path,
-                           languages=langs, fallback = True)
+gettext.textdomain(APP)
+gettext.bindtextdomain(APP, './i18n')
+lang = gettext.translation(APP, './i18n', languages=langs, fallback = True)
 _ = lang.gettext
 
 

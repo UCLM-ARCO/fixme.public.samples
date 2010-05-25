@@ -1,19 +1,19 @@
 
 - Ejecuta:
 
-  $ xgettext --language=Python --keyword=_ --output=hello.pot hello.py
-  $ msginit --input=hello.pot --locale=es_ES
-  $ msginit --input=hello.pot --locale=en_US
+  $ xgettext --language=Python --keyword=_ -o hello.pot hello.py
+  $ msginit -i hello.pot -l es_ES
+  $ msginit -i hello.pot -l en_US
 
 - Edita las traducciones en "es.po" y "en_US.po"
 
 - Ejecuta:
 
-  $ mkdir -p es_ES/LC_MESSAGES
-  $ msgfmt --output-file=es_ES/LC_MESSAGES/hello.mo es.po
+  $ mkdir  -p i18n/es_ES/LC_MESSAGES
+  $ msgfmt -o i18n/es_ES/LC_MESSAGES/hello.mo es.po
 
-  $ mkdir -p en_US/LC_MESSAGES
-  $ msgfmt --output-file=en_US/LC_MESSAGES/hello.mo en_US.po
+  $ mkdir  -p i18n/en_US/LC_MESSAGES
+  $ msgfmt -o i18n/en_US/LC_MESSAGES/hello.mo en_US.po
 
 - Prueba:
 
