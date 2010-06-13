@@ -1,28 +1,22 @@
 #!/usr/bin/python2.6
 # -*- coding: utf-8; mode: python -*-
 
-import sys
+import sys, urllib
 
 import pycurl
-import urllib
 
 print 'Using PycURL %s version' % pycurl.version
 
 if len(sys.argv) < 4:
-    print '''Usage:
-\t%s url user pass [cookie_file_name]
-
+    print '''Usage:\t%s url user pass [cookie_file_name]\n
 If no cookie file name is given, it will write the cookie on /tmp/cookie.txt
-''' % sys.argv[0]
+''' % __file__
     sys.exit(1)
 
-url  = sys.argv[1]
-user = sys.argv[2]
-pwd  = sys.argv[3]
+url, user, pwd  = sys.argv[1:4]
 
 try:
     cookie_file = sys.argv[4]
-
 except IndexError:
     cookie_file = '/tmp/cookie.txt'
 

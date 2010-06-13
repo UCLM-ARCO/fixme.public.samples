@@ -8,15 +8,11 @@ import pycurl
 print 'Using PycURL %s version' % pycurl.version
 
 if len(sys.argv) < 2:
-    print '''Usage:
-\t%s url
-''' % sys.argv[0]
+    print "Usage:\t%s url\n" % __file__
     sys.exit(1)
 
-url = sys.argv[1]
-
 c = pycurl.Curl()
-c.setopt(pycurl.URL, url)
+c.setopt(pycurl.URL, sys.argv[1])
 
 c.perform()
 c.close()
