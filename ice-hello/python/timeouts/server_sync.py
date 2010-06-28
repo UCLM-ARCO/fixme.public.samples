@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import sys, traceback, Ice, time
 Ice.loadSlice('../hello.ice')
 import UCLM
@@ -11,7 +14,7 @@ class HelloI(UCLM.Hello):
 class server(Ice.Application):
     def run(self, argv):
         self.shutdownOnInterrupt()
-    
+
         # 1) Creamos un adaptador de Objetos.
         adapter = self.communicator().\
                   createObjectAdapterWithEndpoints("Server", "default -p 9999")
@@ -25,7 +28,7 @@ class server(Ice.Application):
         # 4) Activacion del Adaptador.
         adapter.activate()
         self.communicator().waitForShutdown()
-            
+
         return 0
 
 

@@ -1,18 +1,20 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import sys, traceback, Ice
 Ice.loadSlice('../hello.ice')
 import UCLM
 
 
 class client (Ice.Application):
-    
+
     def run(self, argv):
         base = self.communicator().stringToProxy("Hello:default -p 9999 -t 3000")
-    
+
         printer = UCLM.HelloPrx.checkedCast(base)
-            
+
         if not printer:
             raise RuntimeError("Invalid proxy")
-            
+
         printer.puts("Hello World!")
 
         return 0
