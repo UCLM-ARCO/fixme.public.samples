@@ -1,17 +1,24 @@
+-*- coding:utf-8 -*-
+
 Para construir todos los ficheros necesarios basta con utilizar:
+
 $ make
 
-
 Para ejecutar el servidor, basta con:
+
 $ ./Server
-Devolver· su identificaciÛn
 
+Devolver√° su identificaci√≥n
 
-Para ejecutar el cliente basta con copiar la identificaciÛn obtenida en el servidor y pas·rsela al cliente, de la forma:
-$ ./Client "IdentificaciÛn"
+Para ejecutar el cliente basta con copiar la identificaci√≥n obtenida
+en el servidor y pas√°rsela al cliente, de la forma:
+
+$ ./Client "Identificaci√≥n"
+
 Por ejemplo:
+
 $ ./Client "Hello -t:tcp -h 127.0.0.1 -p 9999"
 
-
 Para eliminar todos los ficheros innecesarios, basta ejecutar:
+
 $ make vclean
