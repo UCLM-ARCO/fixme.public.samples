@@ -1,4 +1,5 @@
+-*- coding: utf-8 -*-
 
-En este mÛdulo se incluyen implementaciones en varios lenguajes para ICE
+En este m√≥dulo se incluyen implementaciones en varios lenguajes para ICE
 con la misma interfaz SLICE (fichero hello.ice). El objetivo que persigue
-este mÛdulo es meramente did·ctico. 
+este m√≥dulo es meramente did√°ctico.
