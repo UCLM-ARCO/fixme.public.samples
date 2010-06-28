@@ -1,5 +1,0 @@
-PASOS:
-------
-   1) $ make
-   2) python server.py &
-   3) python client.py
