@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import sys, traceback, Ice
 Ice.loadSlice('hello.ice')
 import UCLM
@@ -8,7 +11,7 @@ class HelloI(UCLM.Hello):
 
 
 class server(Ice.Application):
-            
+
     def run(self, argv):
         self.shutdownOnInterrupt()
 
@@ -18,12 +21,12 @@ class server(Ice.Application):
         obj = HelloI()
 
         adapter.add(obj, self.communicator().stringToIdentity("Hello"))
-    
+
         adapter.activate()
         self.communicator().waitForShutdown()
-            
+
         return 0
-    
+
 
 if __name__ == "__main__":
     server().main(sys.argv)
