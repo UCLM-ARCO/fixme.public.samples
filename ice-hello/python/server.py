@@ -1,4 +1,7 @@
-import sys, traceback, Ice
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import sys, Ice
 Ice.loadSlice('hello.ice')
 import UCLM
 
@@ -16,10 +19,13 @@ class server(Ice.Application):
                   createObjectAdapterWithEndpoints("Server", "default -p 9999")
 
         # 2) Instanciamos el objeto HelloI.
-        obj = HelloI()
+        servant = HelloI()
 
-        # 3) Informamos al adaptador acerca del nuevo sirviente "Hello"
-        print adapter.add(obj, self.communicator().stringToIdentity("Hello"))
+        # 3) Registramos el nuevo sirviente "Hello"
+        obj = adapter.add(servant, self.communicator().stringToIdentity("Hello"))
+
+        # Referencia del objeto en formato cadena
+        print obj
 
         # 4) Activacion del Adaptador.
         adapter.activate()
@@ -28,5 +34,4 @@ class server(Ice.Application):
         return 0
 
 
-if __name__ == "__main__":
-    sys.exit(server().main(sys.argv))
+sys.exit(server().main(sys.argv))
