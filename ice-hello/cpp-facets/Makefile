@@ -1,41 +1,28 @@
-CFLAGS+=-I. -I/usr/include
-LDLIBS+=-I. -I/usr/include -I/usr/include/Ice -L/usr/lib -lIce -lIceUtil
 
-CXXFLAGS+=$(CFLAGS)
+CC=g++
+CXXFLAGS=-I.
+LDLIBS=-lIce
 
+SLICE=hello
 
-CC=gcc
-CXX=g++
+all: server client
 
+server.cpp client.cpp: $(SLICE).h $(SLICE).cpp
 
+vpath %.ice ../
 
-GENERATED = hello
-
-all: config $(GENERATED).cpp Server Client
-
-Server: Server.o $(GENERATED).o $(GENERATED)I.o
-
-Server.o: Server.cpp
-
-Client: Client.cpp $(GENERATED).o
-
-$(GENERATED): $(GENERATED).cpp
-
-$(GENERATED).o: $(GENERATED).cpp
-
-$(GENERATED).cpp: $(GENERATED).ice
+%.h %.cpp: %.ice
 	slice2cpp $<
 
-$(GENERATED).ice: ../$(GENERATED).ice
-	ln -s $< $@
-
-config: ../config
-	ln -s $< $@
+server: server.o $(SLICE).o
+client: client.o $(SLICE).o
 
 clean:
-	$(RM) *.o
-	$(RM) Server Client
+	$(RM) server client *.o *~
+	$(RM) $(SLICE).* proxy.out config
 
-vclean: clean
-	$(RM) *~ $(GENERATED).cpp $(GENERATED).h
-	$(RM) config *.ice
+run-server: server
+	./server ../config | tee proxy.out
+
+run-client: client
+	./client "$(shell head -1 proxy.out)"

@@ -12,15 +12,13 @@ public:
 	 if (!object)
 		throw "Invalid proxy";
 	 object->puts("Hello World!");
-	 
+
 	 return 0;
   }
 };
 
 
-int
-main (int argc, char* argv[])
-{
+int main (int argc, char* argv[]) {
   Client* app = new Client();
-  app->main(argc, argv, "config");
+  app->main(argc, argv);
 }
