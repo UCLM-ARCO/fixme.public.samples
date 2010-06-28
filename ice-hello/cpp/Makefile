@@ -1,19 +1,31 @@
 
+CC=g++
+CXXFLAGS=-I.
 LDLIBS=-lIce
 
 SLICE=hello
+
 all: server client
 
-server.cc client.cc: $(SLICE).h
+server.cpp client.cpp: $(SLICE).h $(SLICE).cpp
 
-%.h %.cc: ../%.ice
+vpath %.ice ../
+
+%.h %.cpp: %.ice
 	slice2cpp $<
 
 server: server.o $(SLICE).o
 client: client.o $(SLICE).o
 
+config: ../config
+	ln -s $< $@
+
 clean:
 	$(RM) server client *.o *~
+	$(RM) $(SLICE).* proxy.out
 
-vclean: clean
-	$(RM) *~ $(SLICE).cpp $(SLICE).h
+run-server: server config
+	./server --Ice.Config=config | tee proxy.out
+
+run-client: client
+	./client "$(shell head -1 proxy.out)"
