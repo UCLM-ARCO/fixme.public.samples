@@ -16,23 +16,28 @@ class HelloI : public Hello {
 };
 
 class Subscriber : public Application {
-public:
-	virtual int run(int argc, char* argv[]) {
 
+	TopicManagerPrx get_topic_manager() {
 		PropertiesPtr properties = communicator()->getProperties();
 
 		const string prop_key = "IceStorm.TopicManager.Proxy";
-		string endpoint = properties->getProperty(prop_key);
+		string strproxy = properties->getProperty(prop_key);
 
-		if (endpoint.empty()) {
+		if (strproxy.empty()) {
 			cerr << appName() << ": property `" << prop_key << "' not set" << endl;
-			return EXIT_FAILURE;
+			return 0;
 		}
 
-		cout << "Using IceStorm in '" << endpoint << "' " << endl;
+		cout << "Using IceStorm in '" << strproxy << "' " << endl;
 
-		ObjectPrx base = communicator()->stringToProxy(endpoint);
-		TopicManagerPrx topic_mgr = TopicManagerPrx::checkedCast(base);
+		ObjectPrx base = communicator()->stringToProxy(strproxy);
+		return TopicManagerPrx::checkedCast(base);
+	}
+
+public:
+	virtual int run(int argc, char* argv[]) {
+
+		TopicManagerPrx topic_mgr = get_topic_manager();
 		if (!topic_mgr) {
 			cerr << appName() << ": invalid proxy" << endl;
 			return EXIT_FAILURE;

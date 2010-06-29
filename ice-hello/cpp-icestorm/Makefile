@@ -12,9 +12,6 @@ subscriber: subscriber.o $(SLICE).o
 
 publisher.cpp subscriber.cpp: $(SLICE).h $(SLICE).cpp
 
-init:
-	@if ! [ -d db ]; then mkdir db; fi
-
 vpath %.ice ../
 
 %.h %.cpp: %.ice
@@ -25,12 +22,18 @@ clean:
 	$(RM) -r db $(SLICE).*
 
 
-run-subscriber: init subscriber /usr/bin/icebox /usr/bin/icestormadmin
-	icebox --Ice.Config=icebox.config &
-	sleep 5
-	icestormadmin --Ice.Config=icestorm.config -e "create HelloTopic"
+run-subscriber: start subscriber /usr/bin/icebox /usr/bin/icestormadmin
 	./subscriber --Ice.Config=icestorm.config
 
 run-publisher: publisher
 	./publisher --Ice.Config=icestorm.config
 
+start:
+	@if ! [ -d db ]; then mkdir db; fi
+	icebox --Ice.Config=icebox.config &
+	sleep 3
+	icestormadmin --Ice.Config=icestorm.config -e "create HelloTopic"
+
+stop:
+	icestormadmin --Ice.Config=icestorm.config -e "destroy HelloTopic"
+	killall icebox
