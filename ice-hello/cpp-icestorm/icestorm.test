@@ -1,0 +1,23 @@
+# -*- mode:python; coding:utf-8 -*-
+
+import signal
+
+Test('icebox --Ice.Config=icebox.config',
+     detach=True, signal=signal.SIGINT, timeout=10)
+
+admin = Command('icestormadmin --Ice.Config=icestorm.config -e "destroy HelloTopic"',
+             shell=True)
+admin.pre += Poll(OpenPort(10000))
+
+admin = Test('icestormadmin --Ice.Config=icestorm.config -e "create HelloTopic"',
+             shell=True)
+admin.pre += Poll(OpenPort(10000))
+
+t = Test('./subscriber --Ice.Config=icestorm.config',
+         detach=True, signal=signal.SIGINT)
+t.post += FileContains('Waiting events...')
+t.post += FileContains('Event received: Hello World!', times=10)
+
+t = Test('./publisher --Ice.Config=icestorm.config')
+t.pre += Poll(OpenPort(15000))
+t.post += FileContains("publishing 10 'Hello World!'  events")
