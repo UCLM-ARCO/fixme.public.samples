@@ -1,0 +1,12 @@
+# -*- mode:python; coding:utf-8 -*-
+
+server = Test('$testdir/server $basedir/config',
+              shell=True, detach=True, save_stdout=True, signal=2)
+
+client = Test('$testdir/client "$(head -1 %s)"' % server.stdout,
+              shell=True, delay=1)
+
+client.pre += Poll(TaskRunning(server))
+
+server.post += FileContains('SERVER: Se recibió el valor Hello World!')
+server.post += FileContains('La faceta es hola')
