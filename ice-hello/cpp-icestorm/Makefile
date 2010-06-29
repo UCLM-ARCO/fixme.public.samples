@@ -1,39 +1,36 @@
+
 CXX=g++
-
-GENERATED = hello
-
-TARGETS	= publisher subscriber
-
-POBJS	= publisher.o
-SOBJS	= subscriber.o $(GENERATED)I.o
-
-SRCS	= $(OBJS:.o=.cpp) $(POBJS:.o=.cpp) $(SOBJS:.o=.cpp)
-OBJS	= interface.o
-
-
-all: init $(GENERATED).cpp publisher subscriber
-
-init: 
-	@if ! [ -d db ]; then mkdir db; fi 
-	@if ! [ -f hello.ice ]; then ln -s ../../hello.ice .; fi
-
-$(GENERATED).cpp: hello.ice
-	slice2cpp hello.ice
-
-
 CXXFLAGS = -I.
-LDLIBS = -L/usr/lib -lIce -lIceUtil -lIceStorm
+LDLIBS = -lIce -lIceUtil -lIceStorm
 
-publisher.o: publisher.cpp hello.h
-publisher: publisher.o hello.o
+SLICE = hello
 
-subscriber.o: subscriber.cpp hello.h
-subscriber: subscriber.o hello.o helloI.o
+all: publisher subscriber
+
+publisher: publisher.o $(SLICE).o
+subscriber: subscriber.o $(SLICE).o
+
+publisher.cpp subscriber.cpp: $(SLICE).h $(SLICE).cpp
+
+init:
+	@if ! [ -d db ]; then mkdir db; fi
+
+vpath %.ice ../
+
+%.h %.cpp: %.ice
+	slice2cpp $<
 
 clean:
-	$(RM) *.o
+	$(RM) publisher subscriber *.o *~
+	$(RM) -r db $(SLICE).*
 
-vclean: clean
-	$(RM) *~ $(GENERATED).cpp $(GENERATED).h
-	$(RM) publisher subscriber
-	$(RM) -r db hello.ice
+
+run-subscriber: init subscriber /usr/bin/icebox /usr/bin/icestormadmin
+	icebox --Ice.Config=icebox.config &
+	sleep 5
+	icestormadmin --Ice.Config=icestorm.config -e "create HelloTopic"
+	./subscriber --Ice.Config=icestorm.config
+
+run-publisher: publisher
+	./publisher --Ice.Config=icestorm.config
+

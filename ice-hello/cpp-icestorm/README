@@ -5,11 +5,11 @@
 USO
 ---
    // En un terminal
-   $ icebox --Ice.Config=config_service
+   $ icebox --Ice.Config=icebox.config
 
-   // En otro terminal.	
+   // En otro terminal.
    // Creamos el topic HelloWorld y ejecutamos el Subscriber.
-   $ icestormadmin --Ice.Config=config -e "create HelloTopic"
+   $ icestormadmin --Ice.Config=icestorm.config -e "create HelloTopic"
    $ ./subscriber
 
    // En un terminal diferente ejecutamos el publisher
