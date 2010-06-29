@@ -1,7 +1,7 @@
 # -*- mode: makefile-gmake; coding: utf-8 -*-
 
 SUBDIRS = $(shell ls -d */)
-SUBDIRS = cpp cpp-facets
+SUBDIRS = cpp cpp-icestorm cpp-facets
 
 all:     RULE = all
 install: RULE = install
