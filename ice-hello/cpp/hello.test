@@ -1,7 +1,7 @@
 # -*- mode:python; coding:utf-8 -*-
 
 server = Test('$testdir/server $basedir/config',
-              shell=True, detach=True, save_stdout=True, signal=2)
+              detach=True, save_stdout=True, signal=2)
 server.post += FileContains('Hello World!')
 
 client = Test('$testdir/client "$(head -1 %s)"' % server.stdout,

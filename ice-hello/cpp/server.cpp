@@ -20,10 +20,10 @@ struct Server : public Application {
 	 ObjectAdapterPtr adapter = ic->createObjectAdapter("Server");
 
 	 ObjectPtr servant = new HelloI;
-	 ObjectPrx prx = adapter->add(servant, ic->stringToIdentity("Hello"));
+	 ObjectPrx base = adapter->add(servant, ic->stringToIdentity("Hello"));
 	 adapter->activate();
 
-	 cout << ic->proxyToString(prx) << endl;
+	 cout << ic->proxyToString(base) << endl;
 
 	 ic->waitForShutdown();
 	 return 0;
@@ -32,7 +32,7 @@ struct Server : public Application {
 
 int main(int argc, char* argv[]) {
   Server* app = new Server();
-  return app->main(argc, argv, "config");
+  return app->main(argc, argv, argv[1]);
 }
 
 

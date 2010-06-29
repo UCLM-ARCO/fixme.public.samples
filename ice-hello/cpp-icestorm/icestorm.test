@@ -2,22 +2,28 @@
 
 import signal
 
-Test('icebox --Ice.Config=icebox.config',
-     detach=True, signal=signal.SIGINT, timeout=10)
+icebox = Test('icebox --Ice.Config=./icebox.config',
+         cwd='$testdir', detach=True, signal=signal.SIGINT, timeout=10)
+icebox.pre += FileExists('/usr/bin/icebox')
 
-admin = Command('icestormadmin --Ice.Config=icestorm.config -e "destroy HelloTopic"',
+admin = Command('icestormadmin --Ice.Config=$testdir/icestorm.config -e "destroy HelloTopic"',
+             shell=True)
+admin.pre += FileExists('/usr/bin/icestormadmin')
+admin.pre += Poll(OpenPort(10000))
+
+admin = Test('icestormadmin --Ice.Config=$testdir/icestorm.config -e "create HelloTopic"',
              shell=True)
 admin.pre += Poll(OpenPort(10000))
 
-admin = Test('icestormadmin --Ice.Config=icestorm.config -e "create HelloTopic"',
-             shell=True)
-admin.pre += Poll(OpenPort(10000))
-
-t = Test('./subscriber --Ice.Config=icestorm.config',
+s = Test('$testdir/subscriber --Ice.Config=$testdir/icestorm.config',
          detach=True, signal=signal.SIGINT)
-t.post += FileContains('Waiting events...')
-t.post += FileContains('Event received: Hello World!', times=10)
+s.pre += FileExists('$testdir/subscriber')
+s.post += FileContains('Waiting events...')
+s.post += FileContains('Event received: Hello World!', times=10)
 
-t = Test('./publisher --Ice.Config=icestorm.config')
-t.pre += Poll(OpenPort(15000))
-t.post += FileContains("publishing 10 'Hello World!'  events")
+p = Test('$testdir/publisher --Ice.Config=$testdir/icestorm.config')
+p.pre += FileExists('$testdir/publisher')
+p.pre += Poll(OpenPort(15000))
+p.post += FileContains("publishing 10 'Hello World!'  events")
+
+TaskTerminator(s, icebox, delay=2)

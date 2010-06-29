@@ -36,12 +36,12 @@ public:
 		adapter->activate();
 		ic->waitForShutdown();
 		return 0;
-  }
+	}
 };
 
 int main(int argc, char* argv[]) {
-  Server* app = new Server();
-  return app->main(argc, argv, argv[1]);
+	Server* app = new Server();
+	return app->main(argc, argv, argv[1]);
 }
 
 
