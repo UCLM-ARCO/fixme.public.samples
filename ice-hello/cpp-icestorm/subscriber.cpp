@@ -20,7 +20,7 @@ class Subscriber : public Application {
 	TopicManagerPrx get_topic_manager() {
 		PropertiesPtr properties = communicator()->getProperties();
 
-		const string prop_key = "IceStorm.TopicManager.Proxy";
+		const string prop_key = "IceStormAdmin.TopicManager.Default";
 		string strproxy = properties->getProperty(prop_key);
 
 		if (strproxy.empty()) {

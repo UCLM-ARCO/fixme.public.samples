@@ -5,35 +5,43 @@
 
 using namespace std;
 using namespace Ice;
+using namespace IceStorm;
 using namespace UCLM;
 
 class Publisher : public Application {
+
+	TopicManagerPrx get_topic_manager() {
+		PropertiesPtr properties = communicator()->getProperties();
+
+		const string prop_key = "IceStormAdmin.TopicManager.Default";
+		string strproxy = properties->getProperty(prop_key);
+
+		if (strproxy.empty()) {
+			cerr << appName() << ": property `" << prop_key << "' not set" << endl;
+			return 0;
+		}
+
+		cout << "Using IceStorm in '" << strproxy << "' " << endl;
+
+		ObjectPrx base = communicator()->stringToProxy(strproxy);
+		return TopicManagerPrx::checkedCast(base);
+	}
+
 public:
   virtual int run(int argc, char*[]) {
-	  PropertiesPtr properties = communicator()->getProperties();
 
-	  const string prop_key = "IceStorm.TopicManager.Proxy";
-	  string endpoint = properties->getProperty(prop_key);
-
-	  if (endpoint.empty()) {
-		  cerr << appName() << ": property `" << prop_key
-			   << "' not set" << endl;
-		  return EXIT_FAILURE;
-	  }
-
-	  ObjectPrx base = communicator()->stringToProxy(endpoint);
-	  IceStorm::TopicManagerPrx topic_mgr = IceStorm::TopicManagerPrx::checkedCast(base);
+	  TopicManagerPrx topic_mgr = get_topic_manager();
 	  if(!topic_mgr){
 		  cerr << appName() << ": invalid proxy" << endl;
 		  return EXIT_FAILURE;
 	  }
 
 
-	  IceStorm::TopicPrx topic;
+	  TopicPrx topic;
 	  try{
 		  topic = topic_mgr->retrieve("HelloTopic");
 	  }
-	  catch (const IceStorm::NoSuchTopic& e){
+	  catch (const NoSuchTopic& e){
 		  cerr << appName() << ": no sucho topic found, created" << endl;
 		  topic = topic_mgr->create("HelloTopic");
 	  }
