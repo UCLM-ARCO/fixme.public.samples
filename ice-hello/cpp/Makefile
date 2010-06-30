@@ -19,7 +19,7 @@ vpath %.ice ../
 
 clean:
 	$(RM) server client *.o *~
-	$(RM) $(SLICE).* proxy.out
+	$(RM) $(SLICE).{o,cpp,h} proxy.out
 
 run-server: server
 	./server --Ice.Config=../config | tee proxy.out
