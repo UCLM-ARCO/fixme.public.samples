@@ -4,13 +4,14 @@ CXXFLAGS = -I.
 LDLIBS = -lIce -lIceUtil -lIceStorm
 
 SLICE = hello
+STUBS=$(addprefix $(SLICE), .h .cpp)
 
 all: publisher subscriber
 
 publisher: publisher.o $(SLICE).o
 subscriber: subscriber.o $(SLICE).o
 
-publisher.cpp subscriber.cpp: $(SLICE).h $(SLICE).cpp
+publisher.cpp subscriber.cpp: $(STUBS)
 
 vpath %.ice ../
 
@@ -19,7 +20,7 @@ vpath %.ice ../
 
 clean:
 	$(RM) publisher subscriber *.o *~
-	$(RM) -r db $(SLICE).*
+	$(RM) -r db $(STUBS)
 
 
 run-subscriber: start subscriber /usr/bin/icebox /usr/bin/icestormadmin

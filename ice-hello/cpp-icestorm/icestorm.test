@@ -26,6 +26,12 @@ s.post += FileContains('Event received: Hello World!', times=10)
 p = Test('$testdir/publisher --Ice.Config=$testdir/icestorm.config')
 p.pre += FileExists('$testdir/publisher')
 p.pre += Poll(OpenPort(15000))
-p.post += FileContains("publishing 10 'Hello World!'  events")
+p.post += FileContains("publishing 10 'Hello World' events")
 
-TaskTerminator(s, icebox, delay=2)
+TaskTerminator(s)
+
+admin = Test('icestormadmin --Ice.Config=$testdir/icestorm.config -e "destroy HelloTopic"',
+             shell=True)
+admin.pre += Poll(OpenPort(10000))
+
+TaskTerminator(icebox)

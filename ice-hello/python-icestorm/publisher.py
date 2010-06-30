@@ -1,49 +1,51 @@
 #!/usr/bin/python
 
 import sys, Ice, IceStorm
-Ice.loadSlice('hello.ice')
+Ice.loadSlice('../hello.ice')
 import UCLM
 
 class Publisher(Ice.Application):
 
-    def run(self, argv):
-
-        # Get proxy info for Topic Manager
+    def get_topic_manager(self):
         properties = self.communicator().getProperties()
 
-        prop_key = "IceStorm.TopicManager.Proxy"
-        endpoint = properties.getProperty(prop_key)
-        if not endpoint:
+        prop_key = "IceStormAdmin.TopicManager.Default"
+        strproxy = properties.getProperty(prop_key)
+
+        if not strproxy:
             print "property", prop_key, "not set"
-            return 1
-        
-        print "Using IceStorm in '%s'" % endpoint
-            
-        base = self.communicator().stringToProxy(endpoint)
-        topic_mgr = IceStorm.TopicManagerPrx.checkedCast(base)
+            return 0
+
+        print "Using IceStorm in '%s'" % strproxy
+
+        base = self.communicator().stringToProxy(strproxy)
+        return IceStorm.TopicManagerPrx.checkedCast(base)
+
+    def run(self, argv):
+
+        topic_mgr = self.get_topic_manager()
         if not topic_mgr:
-            print 'invalid proxy'
+            print ': invalid proxy'
             return 2
 
-        
         # Get topic
         try:
             topic = topic_mgr.retrieve("HelloTopic")
+
         except IceStorm.NoSuchTopic, e:
             print "no such topic found, created"
             topic = topic_mgr.create("HelloTopic")
 
-
         # Get publisher and call remote object method
-        prx = topic.getPublisher()
-            
-        hello = UCLM.HelloPrx.uncheckedCast(prx)
+        base = topic.getPublisher()
+
+        prx = UCLM.HelloPrx.uncheckedCast(base)
 
         print "publishing 10 'Hello World' events"
         for i in range(10):
-            hello.puts("Hello world!")
+            prx.puts("Hello world!")
 
-        return 0       
+        return 0
 
 
 sys.exit(Publisher().main(sys.argv))

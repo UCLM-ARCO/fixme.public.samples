@@ -45,16 +45,16 @@ public:
 
 		// Create the servant to receive the events.
 		ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Hello.Subscriber");
-		ObjectPtr helloObj = new HelloI;
+		ObjectPtr servant = new HelloI;
 
 		// Add a Servant for the Ice Object.
-		ObjectPrx obj = adapter->addWithUUID(helloObj);
+		ObjectPrx base = adapter->addWithUUID(servant);
 		TopicPrx topic;
 
-		try{
+		try {
 			topic = topic_mgr->retrieve("HelloTopic");
 			QoS qos;
-			topic->subscribeAndGetPublisher(qos, obj);
+			topic->subscribeAndGetPublisher(qos, base);
 		}
 		catch(const NoSuchTopic& e){
 			cerr << appName() << ": " << e << " name: " << e.name << endl;
@@ -67,7 +67,7 @@ public:
 		shutdownOnInterrupt();
 		communicator()->waitForShutdown();
 
-		topic->unsubscribe(obj);
+		topic->unsubscribe(base);
 
 		return EXIT_SUCCESS;
 	}

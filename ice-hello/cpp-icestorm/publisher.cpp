@@ -53,7 +53,7 @@ public:
 
 	  HelloPrx hello = HelloPrx::uncheckedCast(prx);
 
-	  cout << "publishing 10 'Hello World!'  events" << endl;
+	  cout << "publishing 10 'Hello World' events" << endl;
 	  for (int i = 0; i < 10; ++i) {
 		  hello->puts("Hello World!");
 	  }

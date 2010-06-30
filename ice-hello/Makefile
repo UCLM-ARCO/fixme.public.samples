@@ -1,7 +1,7 @@
 # -*- mode: makefile-gmake; coding: utf-8 -*-
 
 SUBDIRS = $(shell ls -d */)
-SUBDIRS = cpp cpp-icestorm cpp-facets cpp-freeze
+SUBDIRS = cpp cpp-icestorm cpp-facets cpp-freeze python-icestorm
 
 all:     RULE = all
 install: RULE = install
