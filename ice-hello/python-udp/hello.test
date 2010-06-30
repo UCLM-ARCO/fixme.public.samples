@@ -1,0 +1,13 @@
+# -*- mode:python; coding:utf-8 -*-
+
+
+for adaptor in ['Server.udp', 'Server.mcast']:
+    server = Test('./server.py %s --Ice.Config=../config' % adaptor,
+                  cwd='$testdir', detach=True, save_stdout=True, signal=2)
+    server.post += FileContains('Hello World!')
+
+    client = Test('./client.py "$(head -1 %s)"' % server.stdout,
+                  cwd='$testdir', shell=True)
+    client.pre += Poll(TaskRunning(server))
+
+    TaskTerminator(server, delay=1)

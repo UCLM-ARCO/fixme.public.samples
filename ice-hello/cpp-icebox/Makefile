@@ -29,7 +29,7 @@ unistall:
 	$(RM) /usr/lilb/libHelloService.so
 
 clean:
-	$(RM) *.o
+	$(RM) *.o $(GENERATED).h $(GENERATED).cpp
 	$(RM) libHelloService.so client
 
 vclean: clean

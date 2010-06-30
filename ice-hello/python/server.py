@@ -5,32 +5,35 @@ import sys, Ice
 Ice.loadSlice('../hello.ice')
 import UCLM
 
+
 class HelloI(UCLM.Hello):
     def puts(self, s, current=None):
         print s
 
 
-class server(Ice.Application):
+class Server(Ice.Application):
     def run(self, argv):
         self.shutdownOnInterrupt()
 
-        # 1) Creamos un adaptador de Objetos.
-        adapter = self.communicator(). createObjectAdapter("Server")
+        ic = self.communicator()
 
-        # 2) Instanciamos el objeto HelloI.
+        # 1) Create object adapter
+        adapter = ic.createObjectAdapter("Server")
+
+        # 2) Create servant (HelloI instance)
         servant = HelloI()
 
-        # 3) Registramos el nuevo sirviente "Hello"
-        base = adapter.add(servant, self.communicator().stringToIdentity("Hello"))
+        # 3) Register servant in the adaptor
+        base = adapter.add(servant, ic.stringToIdentity("Hello"))
         adapter.activate()
 
-        # Referencia del objeto en formato cadena
+        # Print remote object reference
         print base
 
-        # 4) Activacion del Adaptador.
-        self.communicator().waitForShutdown()
+        # 4) wait server ends
+        ic.waitForShutdown()
 
         return 0
 
 
-sys.exit(server().main(sys.argv))
+sys.exit(Server().main(sys.argv))
