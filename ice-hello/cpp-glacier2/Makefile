@@ -30,3 +30,12 @@ clean:
 	$(RM) *.o
 	$(RM) server client
 	$(RM) *~ $(GENERATED).cpp $(GENERATED).h
+
+run-glacier2:
+	glacier2router --Ice.Config=glacier.conf
+
+run-server:
+	./server --Ice.Config=config | tee proxy.out
+
+run-client:
+	./client --Ice.Config=config "$(shell head -1 proxy.out)"
