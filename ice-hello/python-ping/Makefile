@@ -1,4 +1,6 @@
 
+all:
+
 clean:
 	$(RM) proxy.out *~
 
