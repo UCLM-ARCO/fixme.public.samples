@@ -1,14 +1,15 @@
-#!/usr/bin/python
+#!/usr/bin/python -u
+# -*- coding: utf-8 -*-
 "A ICE hello-world with GTK GUI"
 
 import sys
 
 import Ice
-Ice.loadSlice('hello.ice')
+Ice.loadSlice('../hello.ice')
 import UCLM
 
 import gtk, gobject
-gtk.threads_init()
+gobject.threads_init()
 
 
 class HelloI(UCLM.Hello):
@@ -24,36 +25,31 @@ class Gui:
         textview = gtk.TextView()
         window.add(textview)
         window.show_all()
-        window.connect('destroy', self.main_quit)
+        window.connect('destroy', gtk.main_quit)
         self.textbuffer = textview.get_buffer()
-
-    def main_quit(self, obj):
-        gtk.main_quit()
 
 
 class Server(Ice.Application):
     def run(self, argv):
 
-        # 1) Creamos un adaptador de objetos.
-        adapter = self.communicator().createObjectAdapter("Servidor")
+        ic = self.communicator()
+        servant = HelloI()
 
-        # 2) Instanciamos el objeto HelloI.
-        obj = HelloI()
-
-        # 3) Informamos al adaptador acerca de un nuevo sirviente "Hello"
-        prx = adapter.add(obj, self.communicator().stringToIdentity("Hello"))
-
-        # 4) Activacion del Adaptador.
+        adapter = ic.createObjectAdapter("Server")
+        prx = adapter.add(servant, ic.stringToIdentity("Hello"))
         adapter.activate()
 
-        print self.communicator().proxyToString(prx)
+        print prx
 
-        self.shutdownOnInterrupt()
-
+        self.callbackOnInterrupt()
         gtk.main()
-        #self.communicator().waitForShutdown()
+        ic.shutdown()
+        return 0
+
+    def interruptCallback(self, args):
+        gobject.idle_add(gtk.main_quit)
 
 
 gui = Gui()
-Server().main(sys.argv, 'config')
+sys.exit(Server().main(sys.argv))
 

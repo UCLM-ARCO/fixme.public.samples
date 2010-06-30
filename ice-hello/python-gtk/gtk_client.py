@@ -1,5 +1,8 @@
+#!/usr/bin/python -u
+# -*- coding: utf-8 -*-
+
 import sys, Ice
-Ice.loadSlice('hello.ice')
+Ice.loadSlice('../hello.ice')
 import UCLM
 
 import gtk
@@ -32,11 +35,11 @@ class Client (Ice.Application):
             raise RuntimeError("Invalid proxy")
 
         gtk.main()
-          
+
     def send_hello(self):
         self.hello.puts("Hello World!")
-        
+
 
 app = Client()
 gui = Gui(app)
-app.main(sys.argv, 'config')
+app.main(sys.argv)
