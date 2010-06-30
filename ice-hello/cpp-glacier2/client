@@ -1,4 +1,0 @@
-Ice.Default.Router=Glacier2/router:tcp -h 127.0.0.1 -p 8000
-Ice.ACM.Client=0
-Ice.MonitorConnections=60
-Ice.RetryIntervals=-1

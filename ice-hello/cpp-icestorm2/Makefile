@@ -27,7 +27,5 @@ subscriber: subscriber.o hello.o helloI.o
 
 clean:
 	$(RM) *.o
-
-vclean: clean
 	$(RM) *~ $(GENERATED).cpp $(GENERATED).h
 	$(RM) publisher subscriber

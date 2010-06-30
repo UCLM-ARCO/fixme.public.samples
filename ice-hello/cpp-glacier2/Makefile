@@ -11,13 +11,13 @@ CXX=g++
 
 GENERATED = Printer
 
-all: config $(GENERATED).cpp Server Client
+all: $(GENERATED).cpp server client
 
-Server: Server.o $(GENERATED).o $(GENERATED)I.o
+server: server.o $(GENERATED).o $(GENERATED)I.o
 
-Server.o: Server.cpp
+server.o: server.cpp
 
-Client: Client.cpp $(GENERATED).o
+client: client.cpp $(GENERATED).o
 
 $(GENERATED): $(GENERATED).cpp
 
@@ -28,8 +28,5 @@ $(GENERATED).cpp: $(GENERATED).ice
 
 clean:
 	$(RM) *.o
-	$(RM) Server Client
-
-vclean: clean
+	$(RM) server client
 	$(RM) *~ $(GENERATED).cpp $(GENERATED).h
-	$(RM) config *.ice

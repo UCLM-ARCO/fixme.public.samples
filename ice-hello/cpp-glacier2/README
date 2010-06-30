@@ -14,11 +14,11 @@ glacier2router --Ice.Config=glacier.conf
 
 * Ejecutar servidor:
 
-./Server
+./server
 
 * Ejecutar cliente:
 
-./Client "Printer -t:tcp -p 9999"
+./client "Printer -t:tcp -h 127.0.0.2 -p 9999"
 
 
 - EXPLICACIÓN
@@ -32,7 +32,7 @@ de configuración de glacier especifica lo siguiente (en este orden):
 * Interfaz en la red de los servidores.
 * Interfaz en la red de los clientes.
 * Especificación de los permisos. Glacier2 debe funcionar con algún tipo
-de seguridad. En este caso, no se hace comprobación de los permisos. Sin 
+de seguridad. En este caso, no se hace comprobación de los permisos. Sin
 embargo, existen 2 formas de acceso seguro:
    - Clave SSL.
    - Certificados SSL.

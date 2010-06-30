@@ -14,7 +14,7 @@ public:
     Ice::CommunicatorPtr ic = communicator();
     Ice::ObjectAdapterPtr adapter = ic->createObjectAdapter("Server");
     Ice::ObjectPtr servant = new Demo::PrinterI;
-    Ice::ObjectPrx object = adapter->add(servant, ic->stringToIdentity("Printer"));
+    cout << adapter->add(servant, ic->stringToIdentity("Printer")) << endl;
     adapter->activate();
     ic->waitForShutdown();
     return 0;
@@ -24,5 +24,5 @@ public:
 int main(int argc, char* argv[])
 {
   Server* srv = new Server();
-  srv->main(argc, argv, "config");
+  srv->main(argc, argv);
 }

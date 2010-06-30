@@ -18,7 +18,7 @@ public:
     //Creamos una sesión con el router obtenido.
     //El usuario y pass no se tienen en cuenta.
     Glacier2::SessionPrx session=router->createSession("usuario","pass");
-    
+
     Ice::ObjectPrx base = ic->stringToProxy(argv[1]);
     Demo::PrinterPrx pr = Demo::PrinterPrx::checkedCast(base);
     if (!pr)
@@ -33,5 +33,5 @@ public:
 int main(int argc, char* argv[])
 {
   Client* cli = new Client();
-  cli->main(argc, argv, "config");
+  cli->main(argc, argv);
 }
