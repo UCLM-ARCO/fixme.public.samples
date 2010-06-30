@@ -1,5 +1,5 @@
 
-all:
+all:  icebox.config icestorm.config
 
 clean:
 	$(RM) *~ *.config
