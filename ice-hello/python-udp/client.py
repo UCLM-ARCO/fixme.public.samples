@@ -1,30 +1,30 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+#!/usr/bin/python -u
+# -*- coding: utf-8 -*-
 
-import sys, traceback, Ice
-Ice.loadSlice('hello.ice')
+import sys, Ice
+Ice.loadSlice('../hello.ice')
 import UCLM
 
 class client (Ice.Application):
 
     def run(self, argv):
 
-        base = self.communicator().stringToProxy("Hello:udp -p 9999")
-
+        base = self.communicator().stringToProxy(argv[1])
         base = base.ice_datagram()
 
-        printer = UCLM.HelloPrx.uncheckedCast(base)
+        prx = UCLM.HelloPrx.uncheckedCast(base)
 
-        if not printer:
+        if not prx:
             raise RuntimeError("Invalid proxy")
 
-        printer.puts("Hello World!")
-
-        printer.ice_ping()
+        prx.puts("Hello World!")
+        prx.ice_ping()
 
         return 0
 
 
 if __name__ == "__main__":
-    client().main(sys.argv)
+    sys.exit(client().main(sys.argv))
 

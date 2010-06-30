@@ -1,32 +1,33 @@
-#!/usr/bin/python
+#!/usr/bin/python -u
 # -*- coding: utf-8 -*-
 
-import sys, traceback, Ice
-Ice.loadSlice('hello.ice')
+import sys, Ice
+Ice.loadSlice('../hello.ice')
 import UCLM
+
 
 class HelloI(UCLM.Hello):
     def puts(self, s, current=None):
-        print "Client say: ", s
+        print s
 
 
-class server(Ice.Application):
-
+class Server(Ice.Application):
     def run(self, argv):
         self.shutdownOnInterrupt()
 
-        adapter = self.communicator().\
-                  createObjectAdapterWithEndpoints("Server", "udp -p 9999")
+        ic = self.communicator()
 
-        obj = HelloI()
+        servant = HelloI()
 
-        adapter.add(obj, self.communicator().stringToIdentity("Hello"))
-
+        adapter = ic.createObjectAdapter(argv[1])
+        base = adapter.add(servant, ic.stringToIdentity("Hello"))
         adapter.activate()
-        self.communicator().waitForShutdown()
+
+        print base
+
+        ic.waitForShutdown()
 
         return 0
 
 
-if __name__ == "__main__":
-    server().main(sys.argv)
+sys.exit(Server().main(sys.argv))
