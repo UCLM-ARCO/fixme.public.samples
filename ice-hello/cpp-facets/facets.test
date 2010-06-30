@@ -1,6 +1,6 @@
 # -*- mode:python; coding:utf-8 -*-
 
-server = Test('$testdir/server $basedir/config',
+server = Test('$testdir/server --Ice.Config=$basedir/config',
               shell=True, detach=True, save_stdout=True, signal=2)
 
 client = Test('$testdir/client "$(head -1 %s)"' % server.stdout,

@@ -22,14 +22,14 @@ public:
     }
     else {
       MAX_SERVS = DEF_MAX_SERVS;
-    }    
+    }
 
     _ic = communicator();
-    
+
     // Create the object adapter
     _adapter = _ic->createObjectAdapterWithEndpoints("MServer", "tcp -h 127.0.0.1 -p 11111");
     _adapter->activate();
-    
+
     // Create MAX_SERVS servants
     UCLM::MessagePtr serv;
     Ice::ObjectPrx prx;
@@ -37,7 +37,7 @@ public:
     cout << "Creating posts from 0 to " << MAX_SERVS << " ...";
     cout.flush();
 
-    for (int i=1; i<MAX_SERVS; i++){
+    for (int i=0; i<MAX_SERVS; i++) {
       ostringstream sid;
       sid << "Post" << i;
       serv = new UCLM::MessageI("Message from " + sid.str());
@@ -62,7 +62,7 @@ private:
 };
 
 
-int 
+int
 main(int argc, char* argv[]){
 
   MessageServer srv;

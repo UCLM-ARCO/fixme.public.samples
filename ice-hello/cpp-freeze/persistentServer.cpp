@@ -13,7 +13,7 @@ using namespace UCLM;
 class PersistentMessageServer : virtual public Ice::Application {
 public:
   PersistentMessageServer(const string& dbName) :
-    _dbName(dbName) { 
+    _dbName(dbName) {
   }
 
   virtual int run(int argc, char* argv[]){
@@ -25,7 +25,7 @@ public:
     }
     else {
       MAX_SERVS = DEF_MAX_SERVS;
-    }    
+    }
 
     _ic = communicator();
 
@@ -34,12 +34,15 @@ public:
     _ic->addObjectFactory(factory, PersistentMessage::ice_staticId());
 
     // Create the object adapter
-    _adapter = _ic->createObjectAdapterWithEndpoints("MServer", "tcp -h 127.0.0.1 -p 11112");
+    _adapter =
+			_ic->createObjectAdapterWithEndpoints("MServer",
+																						"tcp -h 127.0.0.1 -p 11112");
     _adapter->activate();
 
     // Create the Freeze evictor
     Freeze::ServantInitializerPtr init = new MessageInitializer;
-    _evictor = Freeze::createEvictor(_adapter, _dbName, "dbfile", init);
+    _evictor = Freeze::createBackgroundSaveEvictor(_adapter, _dbName,
+																									 "dbfile", init);
     _adapter->addServantLocator(_evictor, "");
 
     // Create MAX_SERVS servants
@@ -79,7 +82,7 @@ private:
 };
 
 
-int 
+int
 main(int argc, char* argv[]){
 
   PersistentMessageServer srv("storage");

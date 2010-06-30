@@ -1,0 +1,46 @@
+# -*- mode:python; coding:utf-8 -*-
+
+import signal
+
+server = Test('$testdir/server 10',
+              shell=True, detach=True, save_stdout=True, save_stderr=True,
+              signal=signal.SIGINT)
+
+pserver1 = Test('./persistentServer 10',
+                shell=True, detach=True, save_stdout=True, signal=2,
+                cwd='$testdir')
+
+
+client_tmpl = '$testdir/client "Post%s -t:tcp -h 127.0.0.1 -p %s" %s "Hello %s"'
+
+
+for i in range(10):
+
+    clients = []
+    for port in [11111, 11112]:
+        client_write = Test(client_tmpl % (i, port, 'write', i), shell=True)
+        client_read  = Test(client_tmpl % (i, port, 'read', i),  shell=True)
+
+        client_write.post += FileContains('COMMAND: write')
+        client_write.post += FileContains("MESSAGE: 'Hello %s'" % i)
+
+        client_read.post += FileContains('COMMAND: read')
+        client_read.post += FileContains("VALUE: 'Hello %s'" % i)
+
+        comp = CompositeTask(all, client_write, client_read, detach=True)
+
+        comp.pre += Poll(OpenPort(port))
+
+TaskTerminator(server, pserver1, delay=2)
+
+pserver2 = Test('./persistentServer 10',
+                shell=True, detach=True, save_stdout=True, signal=2,
+                cwd='$testdir')
+
+for i in range(10):
+    client  = Test(client_tmpl % (i, 11112, 'read', i),  shell=True, detach=True)
+    client.pre += Poll(OpenPort(port))
+    client.post += FileContains('COMMAND: read')
+    client.post += FileContains("VALUE: 'Hello %s'" % i)
+
+TaskTerminator(pserver2, delay=2)
