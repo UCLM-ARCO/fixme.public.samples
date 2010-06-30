@@ -1,6 +1,6 @@
 
 clean:
-	$(RM) proxy.out
+	$(RM) proxy.out *~
 
 run-server:
 	./server.py --Ice.Config=../config | tee proxy.out
