@@ -23,13 +23,13 @@ clean:
 	$(RM) -r db $(STUBS)
 
 
-run-subscriber: start subscriber /usr/bin/icebox /usr/bin/icestormadmin
+run-subscriber: subscriber
 	./subscriber --Ice.Config=icestorm.config
 
 run-publisher: publisher
 	./publisher --Ice.Config=icestorm.config
 
-start:
+start: /usr/bin/icebox /usr/bin/icestormadmin
 	@if ! [ -d db ]; then mkdir db; fi
 	icebox --Ice.Config=icebox.config &
 	sleep 3

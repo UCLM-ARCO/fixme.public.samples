@@ -61,7 +61,7 @@ public:
 			return EXIT_FAILURE;
 		}
 
-		cout << "Waiting events..." << endl;
+		cout << "Waiting events... " << base << endl;
 
 		adapter->activate();
 		shutdownOnInterrupt();

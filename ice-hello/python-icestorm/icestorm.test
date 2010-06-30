@@ -23,7 +23,7 @@ s.post += FileContains('Waiting events...')
 s.post += FileContains('Event received: Hello world!', times=10)
 
 p = Test('./publisher.py --Ice.Config=icestorm.config', cwd='$testdir')
-p.pre += Poll(OpenPort(15000))
+p.pre += Poll(TaskRunning(s))
 p.post += FileContains("publishing 10 'Hello World' events")
 
 TaskTerminator(s)

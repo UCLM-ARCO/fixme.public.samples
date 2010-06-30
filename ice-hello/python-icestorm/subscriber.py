@@ -51,7 +51,7 @@ class Subscriber(Ice.Application):
             print "no such topic found"
             return 3
 
-        print 'Waiting events...'
+        print 'Waiting events...', base
 
         adapter.activate()
         self.shutdownOnInterrupt()
