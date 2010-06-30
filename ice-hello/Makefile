@@ -3,8 +3,8 @@
 SUBDIRS = $(shell ls -d */)
 SUBDIRS = \
 	cpp cpp-icestorm cpp-facets cpp-freeze cpp-icebox cpp-glacier2 \
-	python python-ping python-udp python-icestorm java-icestorm
-	python python-ping python-udp python-icestorm python-gtk
+	python python-ping python-udp python-icestorm python-gtk \
+	java-icestorm
 
 all:     RULE = all
 install: RULE = install
