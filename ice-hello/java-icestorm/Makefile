@@ -1,16 +1,13 @@
-IFACE=hello.ice
+
 TARGET=publisher.class subscriber.class
 
-all: $(IFACE) UCLM $(TARGET)
+all: UCLM $(TARGET)
 
 %.class: %.java
 	javac -Xlint:unchecked -classpath /usr/share/java/Ice.jar:. $<
 
-$(IFACE):
-	ln -s ../../hello.ice .
-
-UCLM:
-	slice2java $(IFACE)
+UCLM: ../hello.ice
+	slice2java $<
 
 clean:
 	$(RM) *.class
