@@ -1,7 +1,7 @@
 //
 // Publisher.java
 //
-// 
+//
 //
 
 import UCLM.*;
@@ -11,7 +11,7 @@ import Ice.Application;
 // publisher
 //
 public class publisher extends Ice.Application {
-	
+
 	//
 	// run
 	//
@@ -19,29 +19,29 @@ public class publisher extends Ice.Application {
 
 		// obtain a proxy for the Topic Manager
 		Ice.Properties properties = communicator().getProperties();
-		String prop_key = "IceStorm.TopicManager.Proxy";
-		String endpoint;
+		String strprx;
 
 		try {
-			endpoint = properties.getProperty(prop_key);
+			strprx = properties.getProperty("IceStormAdmin.TopicManager.Default");
 		}
 		catch (Exception ep){
-			System.err.println(ep+" property "+prop_key+" not set");
+			System.err.println("No IceStormAdmin property not set");
 			return 1;
 		}
 
-		Ice.ObjectPrx obj = communicator().stringToProxy(endpoint);
+		Ice.ObjectPrx base = communicator().stringToProxy(strprx);
 		IceStorm.TopicManagerPrx topicManager =
-			IceStorm.TopicManagerPrxHelper.checkedCast(obj);
+			IceStorm.TopicManagerPrxHelper.checkedCast(base);
+
+
 		IceStorm.TopicPrx topic = null;
-	
-		
 		// obtain a proxy asdf topic
 		try {
-		    topic = topicManager.retrieve("hello");
+			topic = topicManager.retrieve("HelloTopic");
 		}
 		catch (IceStorm.NoSuchTopic ex) {
 			System.out.println(ex);
+			return 1;
 		}
 
 		// obtain a proxy for the publisher object
@@ -51,10 +51,10 @@ public class publisher extends Ice.Application {
 		HelloPrx helloPrx = HelloPrxHelper.uncheckedCast(pub);
 
 		// Create a null Property Server
-  		Ice.ObjectPrx obPrx = communicator().stringToProxy("");
-  		HelloPrx psPrx = HelloPrxHelper.checkedCast(obPrx);
+		Ice.ObjectPrx obPrx = communicator().stringToProxy("");
+		HelloPrx psPrx = HelloPrxHelper.checkedCast(obPrx);
 
-		// publish  
+		// publish
 		helloPrx.puts("hola");
 
 		return 0;
@@ -65,6 +65,6 @@ public class publisher extends Ice.Application {
 	//
 	static public void main (String[] args) {
 		publisher app = new publisher();
-		app.main("publisher", args, "config");
+		app.main("publisher", args);
 	} // method main
 } // class publisher

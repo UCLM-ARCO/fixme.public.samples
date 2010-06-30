@@ -1,0 +1,40 @@
+# -*- mode:python; coding:utf-8 -*-
+
+import signal
+
+DebPkgInstalled('libzeroc-ice3.3-java')
+
+Command('mkdir -p $testdir/db')
+
+icebox = Test('icebox --Ice.Config=./icebox.config',
+              cwd='$testdir', detach=True, signal=signal.SIGINT, timeout=10)
+
+admin = Command('icestormadmin --Ice.Config=$testdir/icestorm.config -e "destroy HelloTopic"',
+                shell=True)
+admin.pre += FileExists('/usr/bin/icestormadmin')
+admin.pre += Poll(OpenPort(10000))
+
+admin = Test('icestormadmin --Ice.Config=$testdir/icestorm.config -e "create HelloTopic"',
+             shell=True)
+admin.pre += Poll(OpenPort(10000))
+
+# FIXME - No se por que motivo no responde a signal.SIGINT
+s = Daemon('java -classpath /usr/share/java/Ice.jar:. subscriber --Ice.Config=icestorm.config'
+           , cwd='$testdir')
+
+s.pre += FileExists('$testdir/subscriber.class')
+s.pre += Not(OpenPort(15000))
+s.post += FileContains('hola')
+
+p = Test('java -classpath /usr/share/java/Ice.jar:. publisher --Ice.Config=icestorm.config',
+         cwd='$testdir')
+p.pre += FileExists('$testdir/publisher.class')
+p.pre += Poll(OpenPort(15000))
+
+TaskTerminator(s)
+
+admin = Test('icestormadmin --Ice.Config=$testdir/icestorm.config -e "destroy HelloTopic"',
+             shell=True)
+admin.pre += Poll(OpenPort(10000))
+
+TaskTerminator(icebox)
