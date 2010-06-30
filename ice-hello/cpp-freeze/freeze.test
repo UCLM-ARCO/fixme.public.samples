@@ -39,7 +39,7 @@ pserver2 = Test('./persistentServer 10',
 
 for i in range(10):
     client  = Test(client_tmpl % (i, 11112, 'read', i),  shell=True, detach=True)
-    client.pre += Poll(OpenPort(port))
+    client.pre += Poll(OpenPort(11112))
     client.post += FileContains('COMMAND: read')
     client.post += FileContains("VALUE: 'Hello %s'" % i)
 
