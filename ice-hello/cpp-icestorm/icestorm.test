@@ -2,10 +2,11 @@
 
 import signal
 
+Command('mkdir $testdir/db')
+
 icebox = Test('icebox --Ice.Config=./icebox.config',
          cwd='$testdir', detach=True, signal=signal.SIGINT, timeout=10)
 icebox.pre += FileExists('/usr/bin/icebox')
-icebox.pre += DirExists('$testdir/db')
 
 admin = Command('icestormadmin --Ice.Config=$testdir/icestorm.config -e "destroy HelloTopic"',
              shell=True)

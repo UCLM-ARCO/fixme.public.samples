@@ -32,7 +32,7 @@ struct Server : public Application {
 
 int main(int argc, char* argv[]) {
   Server* app = new Server();
-  return app->main(argc, argv, argv[1]);
+  return app->main(argc, argv);
 }
 
 

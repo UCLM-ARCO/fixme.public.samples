@@ -1,0 +1,12 @@
+# -*- mode:python; coding:utf-8 -*-
+
+server = Test('./server.py --Ice.Config=../config',
+              cwd='$testdir', detach=True, save_stdout=True, signal=2)
+server.post += FileContains('method execution begins')
+
+client = Test('./client.py "$(head -1 %s)"' % server.stdout,
+              cwd='$testdir', shell=True)
+client.pre += Poll(TaskRunning(server))
+client.post += FileContains('longTimeJob retval')
+
+TaskTerminator(server, delay=1)

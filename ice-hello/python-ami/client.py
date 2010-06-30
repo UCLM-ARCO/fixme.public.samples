@@ -1,13 +1,17 @@
-import Ice
+#!/usr/bin/python -u
+# -*- coding: utf-8 -*-
+
 import sys
 import time
+
+import Ice
 Ice.loadSlice('hello_ami.ice')
 import UCLM
 
 
 class AMI_CallBack(object):
     def ice_response(self, result):
-        print "[%s] ice_response: \n%s" % (time.time(), result)
+        print "[%s] ice_response: %s" % (time.time(), result)
 
     def ice_exception(self, ex):
         print "[%s] ice_exception: \n%s" % (time.time(), ex)
@@ -21,13 +25,12 @@ class AMI_CallBack(object):
 
 class Cliente(Ice.Application):
     def run(self, argv ):
-        c = self.communicator()
-        minimo = UCLM.HelloAMIPrx.checkedCast(c.stringToProxy(argv[1]))
+        ic = self.communicator()
+        prx = UCLM.HelloAMIPrx.checkedCast(ic.stringToProxy(argv[1]))
         cb = AMI_CallBack()
-        print "[%s] antes de llamar" % time.time()
-        minimo.longTimeJob_async(cb)
-        print "[%s] despues de llamar" % time.time()
-        print "puedo seguir haciendo cosas"
+        print "[%s] before async invocation" % time.time()
+        prx.longTimeJob_async(cb)
+        print "[%s] after async invocation" % time.time()
 
 
 s = Cliente()

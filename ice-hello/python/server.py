@@ -1,13 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/python -u
 # -*- coding: utf-8 -*-
 
 import sys, Ice
-Ice.loadSlice('hello.ice')
+Ice.loadSlice('../hello.ice')
 import UCLM
 
 class HelloI(UCLM.Hello):
     def puts(self, s, current=None):
-        print "Client say: ", s
+        print s
 
 
 class server(Ice.Application):
@@ -15,20 +15,19 @@ class server(Ice.Application):
         self.shutdownOnInterrupt()
 
         # 1) Creamos un adaptador de Objetos.
-        adapter = self.communicator().\
-                  createObjectAdapterWithEndpoints("Server", "default -p 9999")
+        adapter = self.communicator(). createObjectAdapter("Server")
 
         # 2) Instanciamos el objeto HelloI.
         servant = HelloI()
 
         # 3) Registramos el nuevo sirviente "Hello"
-        obj = adapter.add(servant, self.communicator().stringToIdentity("Hello"))
+        base = adapter.add(servant, self.communicator().stringToIdentity("Hello"))
+        adapter.activate()
 
         # Referencia del objeto en formato cadena
-        print obj
+        print base
 
         # 4) Activacion del Adaptador.
-        adapter.activate()
         self.communicator().waitForShutdown()
 
         return 0

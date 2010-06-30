@@ -22,7 +22,7 @@ clean:
 	$(RM) $(SLICE).* proxy.out
 
 run-server: server
-	./server ../config | tee proxy.out
+	./server --Ice.Config=../config | tee proxy.out
 
 run-client: client
 	./client "$(shell head -1 proxy.out)"

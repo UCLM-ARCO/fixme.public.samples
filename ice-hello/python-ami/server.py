@@ -1,27 +1,36 @@
+#!/usr/bin/python -u
+# -*- coding: utf-8 -*-
+
+import sys, time
 import Ice
-import sys
-import time
 Ice.loadSlice('hello_ami.ice')
 import UCLM
 
 class HelloAMII(UCLM.HelloAMI):
     def longTimeJob(self, ctx=None):
-        print "[%s] Entro en la llamada que dura mucho" % time.time()
-        time.sleep(10)
-        print "[%s] Termina la llamada" % time.time()
+        print "[%s] method execution begins" % time.time()
+        time.sleep(3)
+        print "[%s] method execution ends" % time.time()
         return "longTimeJob retval"
 
 
 class Server(Ice.Application):
     def run(self, argv):
-        m = HelloAMII()
-        c = self.communicator()
-        oa = c.createObjectAdapterWithEndpoints("adapter", "tcp")
-        print "[%s] %s" % (time.time(), oa.add(m, c.stringToIdentity("hello-ami")))
-        oa.activate()
+        ic = self.communicator()
+        self.shutdownOnInterrupt()
 
-        c.waitForShutdown()
+        adapter = ic.createObjectAdapter("Server")
 
+        servant = HelloAMII()
+        base = adapter.add(servant, ic.stringToIdentity("Hello"))
+        adapter.activate()
+
+        print base
+        print '[%s] server starts' % time.time()
+
+        ic.waitForShutdown()
+
+        return 0
 
 if __name__ == "__main__":
     s = Server()
