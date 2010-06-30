@@ -6,10 +6,10 @@ clean:
 
 
 run-server-udp:
-	./server.py Server.udp --Ice.Config=../config | tee proxy.out
+	./server.py Server-udp --Ice.Config=../config | tee proxy.out
 
 run-server-mcast:
-	./server.py Server.mcast --Ice.Config=../config | tee proxy.out
+	./server.py Server-mcast --Ice.Config=../config | tee proxy.out
 
 
 run-client:

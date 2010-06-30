@@ -1,7 +1,7 @@
 # -*- mode:python; coding:utf-8 -*-
 
 
-for adaptor in ['Server.udp', 'Server.mcast']:
+for adaptor in ['Server-udp', 'Server-mcast']:
     server = Test('./server.py %s --Ice.Config=../config' % adaptor,
                   cwd='$testdir', detach=True, save_stdout=True, signal=2)
     server.post += FileContains('Hello World!')
