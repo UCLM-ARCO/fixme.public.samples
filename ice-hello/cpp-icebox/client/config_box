@@ -1,5 +1,0 @@
-IceBox.ServiceManager.Endpoints=tcp -p 10000
-IceBox.UseSharedCommunicator=1
-IceBox.Service.HelloService=HelloService:create
-HelloService.Proxy=ServiceHola:tcp -p 9999
-HelloService.Endpoints=tcp -p 9999

@@ -15,7 +15,7 @@ create(::Ice::CommunicatorPtr communicator)
 {
     return new HelloService;
 }
- 
+
 }
 
 HelloService::HelloService(){}
@@ -31,10 +31,11 @@ HelloService::start(const string& name,
 
   _adapter = communicator->createObjectAdapter(name);
   ::Ice::ObjectPtr object = new UCLM::HelloI;
-  _adapter->add(object, communicator->stringToIdentity("ServiceHola"));
+  cout << _adapter->add(object, communicator->stringToIdentity("ServiceHola"))
+			 << endl;
   _adapter->activate();
 
-  cout << "** Activación del Servicio." << endl;
+  cout << "** Service activated." << endl;
   cout << object << endl;
 
 
@@ -44,5 +45,5 @@ void
 HelloService::stop()
 {
   _adapter->deactivate();
-  cout << "** Desactivación del Servicio" << endl;
+  cout << "** Service deactivated" << endl;
 }

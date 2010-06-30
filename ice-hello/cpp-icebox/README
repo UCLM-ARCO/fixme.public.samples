@@ -3,16 +3,15 @@ $ make
 
 
 Para ejecutar el Servicio, ejecutar:
-$  icebox --Ice.Config=config_service &
+$ LD_LIBRARY_PATH=. icebox --Ice.Config=icebox.cfg
 
 
 Para ejecutar el cliente, abrir otro terminal y ejecutar:
-$ cd client/
-$ ./clientBox
+$ ./client
 
 En el primer terminal.
 Para eliminar todos los ficheros innecesarios, basta ejecutar:
 $ make vclean
 
-Para Desactivar el servicio, ejecutar: 
-$ iceboxadmin shutdown  --Ice.Config=config_service	
+Para Desactivar el servicio, ejecutar:
+$ iceboxadmin shutdown  --Ice.Config=config_service

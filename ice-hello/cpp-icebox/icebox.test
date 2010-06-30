@@ -1,0 +1,13 @@
+# -*- mode:python; coding:utf-8 -*-
+
+server = Test('icebox --Ice.Config=icebox.cfg',
+              shell=True, detach=True, save_stdout=True, signal=2,
+              cwd='$basedir/cpp-icebox', env={'LD_LIBRARY_PATH':'.'})
+server.post += FileContains('Hello World!')
+
+client = Test('$testdir/client "$(head -1 %s)"' % server.stdout,
+              shell=True, delay=1)
+client.pre += Poll(OpenPort(9999))
+client.post += FileContains('** Mensaje Enviado.')
+
+TaskTerminator(server)
