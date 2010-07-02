@@ -36,15 +36,12 @@ for dom in domains:
         dom.resume()
         continue
 
-    # activating domain. Better way?
-    xml = dom.XMLDesc(virt.VIR_DOMAIN_XML_SECURE)
-
-    conn.createXML(xml, virt.VIR_DOMAIN_NONE)
+    # activating domain
+    dom.create()
     print "Domain '%s' started!!" % dom.name()
-    sys.stdout.flush()
 
     # destroy reference
-    dom.destroy()
+#    dom.destroy()
 
 conn.close()
 
