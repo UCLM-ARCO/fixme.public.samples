@@ -10,12 +10,12 @@ class client (Ice.Application):
     def run(self, argv):
         base = self.communicator().stringToProxy(argv[1])
 
-        printer = UCLM.HelloPrx.checkedCast(base)
+        prx = UCLM.HelloPrx.checkedCast(base)
 
-        if not printer:
+        if not prx:
             raise RuntimeError("Invalid proxy")
 
-        printer.puts("Hello World!")
+        prx.puts("Hello World!")
 
         return 0
 
