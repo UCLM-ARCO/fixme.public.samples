@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- mode:python; coding:utf-8 -*-
 
+import sys
 import pyinotify as inotify
-
 
 class EventHandler(inotify.ProcessEvent):
     def process_IN_CREATE(self, event):
@@ -17,7 +17,7 @@ class EventHandler(inotify.ProcessEvent):
 
 wm = inotify.WatchManager()
 notifier = inotify.Notifier(wm, EventHandler())
-wm.add_watch('.',
+wm.add_watch(sys.argv[1],
              inotify.IN_MODIFY | inotify.IN_CREATE | inotify.IN_DELETE,
              rec=True)
 notifier.loop()
