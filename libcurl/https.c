@@ -17,6 +17,8 @@ int main(int argc, char* argv[])
   CURLcode res;
 
   curl = curl_easy_init();
+  curl_easy_setopt(curl, CURLOPT_VERBOSE, 1);
+
   if(curl) {
     curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
 
@@ -43,6 +45,7 @@ int main(int argc, char* argv[])
      */
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0);
 #endif
+
     res = curl_easy_perform(curl);
     /* always cleanup */
     curl_easy_cleanup(curl);

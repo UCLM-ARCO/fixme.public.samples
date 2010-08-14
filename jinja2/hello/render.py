@@ -9,7 +9,7 @@ class Person:
         self.lastname = lastname
 
     def __str__(self):
-        return "<Person %s %s>" % (self.firstname, self.lastname)
+        return "<Person '%s %s'>" % (self.firstname, self.lastname)
 
 person = Person("Juan", "Nadie Conocido")
 
