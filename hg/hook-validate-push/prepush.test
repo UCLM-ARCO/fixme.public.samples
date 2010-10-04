@@ -1,0 +1,42 @@
+# -*- mode: python; coding: utf-8 -*-
+
+# Prepare base repo
+Command("hg init base")
+Command("cp assertText.sh check.sh base/")
+Command("cp hgrc base/.hg")
+
+# Prepare cloned repo
+Command("hg clone file://`pwd`/base cloned", shell=True)
+Command("echo 'some text' >> cloned/text_file", shell=True)
+Command("cp data cloned/")
+
+# Insert text file, which is ok
+Command("hg -R cloned add cloned/text_file")
+Command("hg -R cloned ci -m 'text file added'", shell=True)
+Test("hg -R cloned push")
+
+# Insert data file, which will fail
+Command("hg -R cloned add cloned/data")
+Command("hg -R cloned ci -m 'data file added'", shell=True)
+Test("hg -R cloned push", must_fail=True)
+
+# OK, test if groups are handled correctly
+Command("hg -R cloned remove cloned/data")
+Command("hg -R cloned ci -m 'remove data'", shell=True)
+Test("hg -R cloned push")
+
+Command("cp cloned/text_file cloned/file2")
+Command("hg -R cloned add cloned/file2")
+Test("hg -R cloned ci -m '1st commit'", shell=True)
+
+Command("cp cloned/text_file cloned/file3")
+Command("hg -R cloned add cloned/file3")
+Test("hg -R cloned ci -m '2nd commit'", shell=True)
+
+Test("hg -R cloned push", must_fail=True)
+
+# Clean a bit
+Command("rm base cloned -rf")
+
+
+

@@ -1,0 +1,2 @@
+[hooks]
+pretxnchangegroup = ./check.sh
