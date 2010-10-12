@@ -1,0 +1,33 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{times}
+
+\usepackage{enumitem}
+\usepackage{blindtext}
+
+\newlist{steps}{enumerate}{2}
+\setlist[steps,1]{label=\arabic*.}
+\setlist[steps,2]{label=\arabic*.}
+
+\begin{document}
+
+\begin{description}[style=nextline]
+\item[item-uno] \blindtext
+\item[item-dos] \blindtext
+\end{description}
+
+\begin{enumerate}
+\item{} {item-uno}
+\item{} {item-dos}
+\end{enumerate}
+
+\begin{steps}
+\item item-uno
+\item item-dos
+\end{steps}
+
+
+\end{document}
