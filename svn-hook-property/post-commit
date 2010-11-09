@@ -1,27 +1,36 @@
-#!/bin/sh
+#!/bin/bash
 
 base="$1"
 rev="$2"
 wget="/usr/bin/wget --no-check-certificate"
-module=$(/usr/bin/svnlook dirs-changed $base)
-property="link"
+property=sentry
 
-while [ 1 ]; do   
-    path=file://$base/$module    
-    uri=$(/usr/bin/svn pg $property $path)   
+function find_property() {
+    module=$1
+    while [ 1 ]; do   
+        path=file://$base/$module    
+        uri=$(/usr/bin/svn pg $property $path)   
 
-    if [ "$uri" ]; then
-	echo "$property path: $path" 1>&2
-	echo "$property URI: $uri" 1>&2
-	$wget "$uri" -o /dev/null
-	break
-    fi
+        echo $path
+	echo $uri
 
-    module=$(dirname $module)
-    if [ "$module" = "." ]; then
-	echo "$property URI: not found" 1>&2
-	break
-    fi
-done
+	if [ "$uri" ]; then
+	    echo "$property path: $path" 1>&2
+	    echo "$property URI: $uri" 1>&2
+	    $wget "$uri" -o /dev/null
+	    break
+	fi
+
+	module=$(dirname $module)
+	if [ "$module" = "." ]; then
+	    echo "$property URI: not found" 1>&2
+	    break
+	fi
+    done
+}
+
+
+/usr/bin/svnlook dirs-changed $base | \
+while read module; do find_property $module; done
 
 
