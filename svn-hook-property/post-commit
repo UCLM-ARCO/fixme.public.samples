@@ -1,0 +1,27 @@
+#!/bin/sh
+
+base="$1"
+rev="$2"
+wget="/usr/bin/wget --no-check-certificate"
+module=$(/usr/bin/svnlook dirs-changed $base)
+property="link"
+
+while [ 1 ]; do   
+    path=file://$base/$module    
+    uri=$(/usr/bin/svn pg $property $path)   
+
+    if [ "$uri" ]; then
+	echo "$property path: $path" 1>&2
+	echo "$property URI: $uri" 1>&2
+	$wget "$uri" -o /dev/null
+	break
+    fi
+
+    module=$(dirname $module)
+    if [ "$module" = "." ]; then
+	echo "$property URI: not found" 1>&2
+	break
+    fi
+done
+
+
