@@ -55,7 +55,6 @@ if len(sys.argv) != 3:
     print "usage: %s nick password" % __file__
     sys.exit(1)
 
-
 account = ImapServer('imap.gmail.com', 993)
 account.login(sys.argv[1], sys.argv[2])
 
