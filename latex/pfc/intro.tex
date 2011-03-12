@@ -1,0 +1,85 @@
+% -*- coding: utf-8 -*-
+
+\chapter{Introducción}
+
+\drop{L}{etra} capital para empezar el capítulo. Este párrafo debería tener al menos cinco
+líneas para que la letra capital quede bien. Este párrafo debería tener al menos cinco
+líneas para que la letra capital quede bien. Este párrafo debería tener al menos cinco
+líneas para que la letra capital quede bien. Este párrafo debería tener al menos cinco
+líneas para que la letra capital quede bien.
+
+
+\section{Una sección}
+
+Casi vacía.
+
+
+\section{Un cuadro}
+
+Los tablas cuando contienen datos con relaciones numéricas. En general se
+denominan «cuadros». Si las columnas están bien alineadas, las líneas verticales
+estorban más que ayudan (no las pongas). Los cuadros se referencian de este
+modo~\ref{tab:rpc-semantics}.
+
+\begin{table}[htbp]
+  \centering
+  \input{tables/RPC-semantics.tex}
+  \caption[Semánticas de \acs{RPC} en presencia de distintos fallos]
+  {Semánticas de \acs{RPC} en presencia de distintos fallos
+    (\textsc{Puder}~\cite{puder05:_distr_system_archit})}
+  \label{tab:rpc-semantics}
+\end{table}
+
+
+\section{Una figura}
+
+Las figuras se referencian así~\ref{fig:informatica}. Recuerda que no tienen
+porqué aparecer en el lugar donde se ponen (mira un libro de verdad). \LaTeX{}
+las colocará donde mejor queden, lo te empeñes en contradecirle, él sabe más que
+tú sobre tipografía.
+
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.2\textwidth]{emblema_informatica.pdf}
+\caption{Escudo oficial de informática}
+\label{fig:informatica}
+\end{center}
+\end{figure}
+
+
+\section{Un listado de código}
+
+Puedes referenciar un listado con~\ref{code:hello}. Éste es un listado flotante,
+pero también pueden ser «no flotantes».
+
+\begin{listing}[
+  float,
+  language = C,
+  caption  = {Hola mundo en C},
+  label    = code:hello]
+#include <stdio.h>
+int main(int argc, char *argv[]) {
+    puts("Hola mundo\n");
+}
+\end{listing}
+
+
+\section{Citas}
+
+Una cita~\cite{design_patterns} (con hypertexto).
+
+
+
+\section{Más texto para que ocupe varias páginas}
+
+\input{lorem-ipsum.txt}
+
+
+
+% Local Variables:
+% coding: utf-8
+% mode: latex
+% TeX-master: "main"
+% mode: flyspell
+% ispell-local-dictionary: "castellano8"
+% End:
