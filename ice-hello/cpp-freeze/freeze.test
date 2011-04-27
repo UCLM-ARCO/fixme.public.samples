@@ -30,7 +30,7 @@ for i in range(10):
 
         comp.pre += Poll(OpenPort(port))
 
-TaskTerminator(server, pserver1, delay=2)
+TaskTerminator(server, pserver1, delay=3)
 
 pserver2 = Test('./persistentServer 10',
                 shell=True, detach=True, save_stdout=True, signal=2,
