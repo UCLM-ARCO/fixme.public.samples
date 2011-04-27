@@ -27,10 +27,9 @@ for i in range(10):
         client_read.post += FileContains("VALUE: 'Hello %s'" % i)
 
         comp = CompositeTask(all, client_write, client_read, detach=True)
-
         comp.pre += Poll(OpenPort(port))
 
-TaskTerminator(server, pserver1, delay=3)
+TaskTerminator(server, pserver1, delay=5)
 
 pserver2 = Test('./persistentServer 10',
                 shell=True, detach=True, save_stdout=True, signal=2,
@@ -42,4 +41,4 @@ for i in range(10):
     client.post += FileContains('COMMAND: read')
     client.post += FileContains("VALUE: 'Hello %s'" % i)
 
-TaskTerminator(pserver2, delay=2)
+TaskTerminator(pserver2, delay=5)
