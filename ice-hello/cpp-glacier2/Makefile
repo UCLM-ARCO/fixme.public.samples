@@ -3,11 +3,8 @@ LDLIBS+=-I. -I/usr/include -I/usr/include/Ice -L/usr/lib -lIce -lIceUtil -I/usr/
 
 CXXFLAGS+=$(CFLAGS)
 
-
-CC=gcc
+CC=g++
 CXX=g++
-
-
 
 GENERATED = Printer
 

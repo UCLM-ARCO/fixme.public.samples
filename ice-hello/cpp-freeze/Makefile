@@ -15,7 +15,7 @@ MKDIR     = mkdir -p
 
 # Config and flags
 CXXFLAGS = -Wall -g -ansi -I.
-LDFLAGS  = -lFreeze -lIce
+LDFLAGS  = -lFreeze -lIce -lIceUtil
 
 # Targets
 all: $(CLIENT) $(NSERVER) $(PSERVER)

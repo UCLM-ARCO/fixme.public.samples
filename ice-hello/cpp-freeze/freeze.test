@@ -15,7 +15,6 @@ client_tmpl = '$testdir/client "Post%s -t:tcp -h 127.0.0.1 -p %s" %s "Hello %s"'
 
 
 for i in range(10):
-
     clients = []
     for port in [11111, 11112]:
         client_write = Test(client_tmpl % (i, port, 'write', i), shell=True)

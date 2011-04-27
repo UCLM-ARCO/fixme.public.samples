@@ -4,7 +4,7 @@ java = 'java -classpath .:/usr/share/java/Ice.jar'
 
 server = Test('%s Server --Ice.Config=hello.cfg' % java,
               cwd='$testdir', detach=True, save_stdout=True, signal=2, expected=130)
-server.pre += FileContains('net.ipv6.bindv6only = 0', '/etc/sysctl.d/bindv6only.conf')
+#server.pre += FileContains('net.ipv6.bindv6only = 0', '/etc/sysctl.d/bindv6only.conf')
 server.post += FileContains('Hello World!')
 
 client = Test('%s Client "$(head -1 %s)"' % (java, server.stdout),

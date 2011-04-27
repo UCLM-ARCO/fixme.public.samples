@@ -1,7 +1,7 @@
 
 CC=g++
 CXXFLAGS=-I.
-LDLIBS=-lIce
+LDLIBS=-lIce -lIceUtil
 
 SLICE=hello
 STUBS=$(addprefix $(SLICE), .h .cpp)
