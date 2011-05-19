@@ -7,7 +7,8 @@ server = Test('$testdir/server 10',
               detach=True, timeout=0, signal=signal.SIGINT)
 
 pserver1 = Test('./persistentServer 10',
-                shell=True, detach=True, save_stdout=True, signal=signal.SIGINT,
+                shell=True, save_stdout=True,
+                detach=True, timeout=0, signal=signal.SIGINT,
                 cwd='$testdir')
 
 
@@ -32,7 +33,8 @@ for i in range(10):
 TaskTerminator(server, pserver1, delay=5)
 
 pserver2 = Test('./persistentServer 10',
-                shell=True, detach=True, save_stdout=True, signal=2,
+                shell=True, save_stdout=True,
+                detach=True, timeout=0, signal=2,
                 cwd='$testdir')
 
 for i in range(10):

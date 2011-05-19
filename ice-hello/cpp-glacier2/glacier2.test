@@ -5,7 +5,8 @@ glacier = Command('glacier2router --Ice.Config=$testdir/glacier.conf',
                   detach=True, timeout=0, signal=2)
 
 server = Test('$testdir/server --Ice.Config=$testdir/config',
-              shell=True, detach=True, save_stdout=True, signal=2)
+              shell=True, save_stdout=True,
+              detach=True, timeout=0, signal=2)
 server.pre += Poll(OpenPort(11111))
 server.post += FileContains('Hola Mundo!')
 
