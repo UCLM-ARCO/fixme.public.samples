@@ -7,7 +7,7 @@ server = Test('$testdir/server 10',
               signal=signal.SIGINT)
 
 pserver1 = Test('./persistentServer 10',
-                shell=True, detach=True, save_stdout=True, signal=2,
+                shell=True, detach=True, save_stdout=True, signal=signal.SIGINT,
                 cwd='$testdir')
 
 
