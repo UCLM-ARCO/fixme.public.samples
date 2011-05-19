@@ -4,7 +4,7 @@ import signal
 
 server = Test('$testdir/server 10',
               shell=True, save_stdout=True, save_stderr=True,
-              detach=True, tiemout=0, signal=signal.SIGINT)
+              detach=True, timeout=0, signal=signal.SIGINT)
 
 pserver1 = Test('./persistentServer 10',
                 shell=True, detach=True, save_stdout=True, signal=signal.SIGINT,
