@@ -1,7 +1,8 @@
 # -*- coding:utf-8; mode:python -*-
 
 glacier = Command('glacier2router --Ice.Config=$testdir/glacier.conf',
-                  shell=True, detach=True, signal=2)
+                  shell=True,
+                  detach=True, timeout=0, signal=2)
 
 server = Test('$testdir/server --Ice.Config=$testdir/config',
               shell=True, detach=True, save_stdout=True, signal=2)
@@ -10,4 +11,3 @@ server.post += FileContains('Hola Mundo!')
 
 client = Test('$testdir/client --Ice.Config=$testdir/config "$(head -1 %s)"' % server.stdout, shell=True, delay=1)
 client.pre += Poll(OpenPort(9999))
-
