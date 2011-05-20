@@ -12,14 +12,15 @@ pserver1 = Test('./persistentServer 10',
                 cwd='$testdir')
 
 
-client_tmpl = '$testdir/client "Post%s -t:tcp -h 127.0.0.1 -p %s" %s "Hello %s"'
+client_tmpl = '$testdir/client "Post{n} -t:tcp -h 127.0.0.1 -p {port}" {cmd} "Hello {n}"'
 
 
 for i in range(10):
-    clients = []
     for port in [11111, 11112]:
-        client_write = Test(client_tmpl % (i, port, 'write', i), shell=True)
-        client_read  = Test(client_tmpl % (i, port, 'read', i),  shell=True)
+        client_write = Test(client_tmpl.format(n=i, port=port, cmd='write'),
+                            shell=True)
+        client_read  = Test(client_tmpl.format(n=i, port=port, cmd='read'),
+                            shell=True)
 
         client_write.post += FileContains('COMMAND: write')
         client_write.post += FileContains("MESSAGE: 'Hello %s'" % i)
@@ -38,7 +39,8 @@ pserver2 = Test('./persistentServer 10',
                 cwd='$testdir')
 
 for i in range(10):
-    client  = Test(client_tmpl % (i, 11112, 'read', i),  shell=True, detach=True)
+    client  = Test(client_tmpl.format(n=i, port=11112, cmd='read'),
+                   shell=True, detach=True)
     client.pre += Poll(OpenPort(11112))
     client.post += FileContains('COMMAND: read')
     client.post += FileContains("VALUE: 'Hello %s'" % i)
