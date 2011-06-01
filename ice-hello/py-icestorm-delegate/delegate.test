@@ -1,0 +1,31 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+import signal
+
+Command('mkdir -p $testdir/db')
+
+icebox = Test('icebox --Ice.Config=./icebox.config',
+         cwd='$testdir', detach=True, signal=signal.SIGINT, timeout=10)
+icebox.pre += FileExists('/usr/bin/icebox')
+
+d = Test("./delegate.py --Ice.Config=icestorm.config ",
+         detach=True, timeout=0, signal = signal.SIGINT)
+
+s= Test('./subscriber.py --Ice.Config=icestorm.config "ASDA -t:tcp -p 3000"',
+        shell=True, timeout=0, 
+        detach=True, signal=signal.SIGINT)
+s.pre += Poll(OpenPort(3000))
+s.post += FileContains("Waiting events...")
+s.post += FileContains("SUBSCRIBED")
+s.post += FileContains("Hola", times=5)
+
+p = Test('./publisher.py --Ice.Config=icestorm.config "ASDA -t:tcp -p 3000"',
+         shell=True)
+p.pre += Poll(TaskRunning(s))
+# p.post += FileContains("Publishing")
+
+TaskTerminator(s,d,icebox)
+
+Command('make clean')
+
