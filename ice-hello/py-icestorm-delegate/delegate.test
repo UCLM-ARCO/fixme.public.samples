@@ -6,7 +6,7 @@ import signal
 Command('mkdir -p $testdir/db')
 
 icebox = Test('icebox --Ice.Config=./icebox.config',
-         cwd='$testdir', detach=True, signal=signal.SIGINT, timeout=10)
+         cwd='$testdir', detach=True, signal=signal.SIGINT, timeout=0)
 icebox.pre += FileExists('/usr/bin/icebox')
 
 d = Test("./delegate.py --Ice.Config=icestorm.config ",
