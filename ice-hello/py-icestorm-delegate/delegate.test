@@ -9,11 +9,12 @@ icebox = Test('icebox --Ice.Config=./icebox.config',
          cwd='$testdir', detach=True, signal=signal.SIGINT, timeout=0)
 icebox.pre += FileExists('/usr/bin/icebox')
 
-d = Test("./delegate.py --Ice.Config=icestorm.config ",
+d = Test("$testdir/delegate.py --Ice.Config=$testdir/icestorm.config",
+         shell=True, cwd='$testdir',
          detach=True, timeout=0, signal = signal.SIGINT)
 
 s= Test('./subscriber.py --Ice.Config=icestorm.config "ASDA -t:tcp -p 3000"',
-        shell=True, timeout=0, 
+        shell=True, timeout=0,
         detach=True, signal=signal.SIGINT)
 s.pre += Poll(OpenPort(3000))
 s.post += FileContains("Waiting events...")
@@ -28,4 +29,3 @@ p.pre += Poll(TaskRunning(s))
 TaskTerminator(s,d,icebox)
 
 Command('make clean')
-
